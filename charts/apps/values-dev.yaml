@@ -1,0 +1,6 @@
+# Development environment overrides
+env: dev
+
+applications:
+  - name: app-one
+  - name: app-two

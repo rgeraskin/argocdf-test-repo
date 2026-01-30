@@ -1,0 +1,6 @@
+# Global settings
+global:
+  repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+  targetRevision: HEAD
+  project: default
+  destinationServer: https://kubernetes.default.svc
