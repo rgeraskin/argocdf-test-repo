@@ -1,0 +1,38 @@
+# Default values for app chart
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.25"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Optional configurations
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Additional labels to apply to all resources
+additionalLabels: {}
+
+# Environment variables
+env: []
+# - name: FOO
+#   value: bar
+
+# ConfigMap data (creates a ConfigMap if non-empty)
+configData: {}
+
+# Secret data (creates a Secret if non-empty)
+secretData: {}

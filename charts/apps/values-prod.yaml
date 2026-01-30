@@ -1,0 +1,6 @@
+# Production environment overrides
+env: prod
+
+applications:
+  - name: app-one
+  - name: app-two

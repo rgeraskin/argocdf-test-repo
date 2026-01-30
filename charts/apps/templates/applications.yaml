@@ -1,0 +1,27 @@
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $.Values.env }}-{{ .name }}
+  namespace: argocd
+  labels:
+    helm.sh/chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $.Values.global.project }}
+  source:
+    repoURL: {{ $.Values.global.repoURL }}
+    targetRevision: {{ $.Values.global.targetRevision | default "HEAD" }}
+    path: apps/{{ $.Values.env }}/{{ .name }}
+  destination:
+    server: {{ $.Values.global.destinationServer }}
+    namespace: {{ $.Values.env }}-{{ .name }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
