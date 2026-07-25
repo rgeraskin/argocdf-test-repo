@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: base-cm
 data:
-  origin: base
+  origin: edited
