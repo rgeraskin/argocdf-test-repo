@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-cm
 data:
   greeting: {{ .Values.greeting | quote }}
+  edited: "yes"
   numeric: {{ .Values.numeric | quote }}
   namespace: {{ .Release.Namespace | quote }}
 ---
