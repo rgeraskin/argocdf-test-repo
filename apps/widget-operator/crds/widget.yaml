@@ -7,7 +7,7 @@ spec:
   names:
     kind: Widget
     plural: widgets
-  scope: Namespaced
+  scope: Cluster
   versions:
     - name: v1
       served: true
