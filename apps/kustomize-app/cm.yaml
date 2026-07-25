@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: kust-cm
 data:
-  tier: basic
+  tier: advanced
