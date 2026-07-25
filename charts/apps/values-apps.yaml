@@ -1,4 +1,4 @@
-# The case catalog: every entry becomes a child Application (apps-of-apps).
+# The case catalog (comment touched): every entry becomes a child Application (apps-of-apps).
 # This file is the git-side replacement for "apply Applications to the cluster"
 # - case branches that change an app's SPEC edit this file; branches that
 # change rendered CONTENT edit the case's fixture dir under apps/.
