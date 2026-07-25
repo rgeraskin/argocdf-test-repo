@@ -17,6 +17,7 @@ applications:
       valueFiles:
         - values.yaml
         - overrides.yaml
+        - new-env.yaml
 
   # --- helm: spec-driven cases (branch edits THIS file)
   - name: web-app-inline
