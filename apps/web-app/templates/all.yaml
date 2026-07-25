@@ -23,4 +23,4 @@ spec:
     spec:
       containers:
         - name: web
-          image: nginx:1.27.0
+          image: nginx:latest
