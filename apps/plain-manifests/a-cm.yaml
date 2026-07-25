@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: plain-a
 data:
-  k: a
+  k: a2
