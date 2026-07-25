@@ -131,7 +131,7 @@ applications:
   # --- external repository source (public; cloned at targetRevision)
   - name: external-podinfo
     repoURL: https://github.com/stefanprodan/podinfo.git
-    targetRevision: 6.7.0
+    targetRevision: 6.8.0
     path: kustomize
 
   # --- local chart whose Chart.yaml pulls an OCI dependency AND a classic
