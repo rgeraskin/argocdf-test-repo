@@ -249,3 +249,9 @@ applications:
           valueFiles:
             - $cvals/apps/podinfo-values/podinfo-values.yaml
       - ref: cvals
+
+  - name: child-added
+    path: apps/web-app
+    helm:
+      values: |
+        greeting: added-child
