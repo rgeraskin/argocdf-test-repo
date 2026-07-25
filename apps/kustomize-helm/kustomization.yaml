@@ -5,4 +5,4 @@ helmCharts:
     releaseName: kusthelm
     skipTests: true
     valuesInline:
-      replicaCount: 1
+      replicaCount: 2
