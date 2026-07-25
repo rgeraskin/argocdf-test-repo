@@ -227,7 +227,7 @@ applications:
     sources:
       - chart: podinfo
         repoURL: ghcr.io/stefanprodan/charts
-        targetRevision: 6.7.0
+        targetRevision: 6.7.1
         helm:
           skipTests: true
           valueFiles:
