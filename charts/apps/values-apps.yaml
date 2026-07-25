@@ -60,8 +60,6 @@ applications:
   #     report; exit stays 2 because the root app's spec change is a change)
   - name: schema-app
     path: apps/schema-app
-    helm:
-      skipSchemaValidation: true
 
   # --- helm: CRDs from crds/ (rendered with --include-crds, ArgoCD parity)
   - name: widget-operator
