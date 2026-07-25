@@ -23,7 +23,7 @@ applications:
     path: apps/web-app
     helm:
       values: |
-        greeting: from-inline
+        greeting: inline-updated
 
   - name: web-app-object
     path: apps/web-app
