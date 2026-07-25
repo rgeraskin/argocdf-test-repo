@@ -29,7 +29,7 @@ applications:
     path: apps/web-app
     helm:
       valuesObject:
-        greeting: from-object
+        greeting: object-updated
 
   # TWO parameters on purpose: the render must show both applied, which one
   # parameter could never demonstrate. Deliberately NO forceString here - it would
