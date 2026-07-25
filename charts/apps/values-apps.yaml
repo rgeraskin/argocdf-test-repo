@@ -9,7 +9,7 @@
 applications:
   # --- helm: fixture-driven cases (branch edits apps/<name>/...)
   - name: web-app
-    path: apps/web-app
+    path: apps/widget-operator
 
   - name: web-app-files
     path: apps/web-app
