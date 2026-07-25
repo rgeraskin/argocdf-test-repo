@@ -202,9 +202,6 @@ applications:
     path: apps/kustomize-helm
 
   # --- directory sources
-  - name: plain-manifests
-    path: apps/plain-manifests
-
   - name: nested-manifests
     path: apps/nested-manifests
     directory:
