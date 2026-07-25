@@ -1,3 +1,3 @@
 greeting: from-values
 numeric: fallback
-replicas: 1
+replicas: 2
