@@ -184,7 +184,12 @@ applications:
   - name: kustomize-app-overrides
     path: apps/kustomize-app
     kustomize:
-      namePrefix: base-
+      namePrefix: pre-
+      namespace: production
+      commonLabels:
+        team: platform
+      images:
+        - nginx=nginx:1.27.1
 
   # This overlay's base lives OUTSIDE its source path (`resources: ../kustomize-base`),
   # which no changed-file-to-source-path matching can see. ArgoCD's
