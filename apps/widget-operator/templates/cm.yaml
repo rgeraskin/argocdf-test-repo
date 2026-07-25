@@ -6,3 +6,4 @@ metadata:
     chart-version: {{ .Chart.Version | quote }}
 data:
   color: {{ .Values.color | quote }}
+{{ end }}
