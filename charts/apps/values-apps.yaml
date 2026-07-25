@@ -49,7 +49,7 @@ applications:
   - name: web-app-named
     path: apps/web-app
     helm:
-      releaseName: base-release
+      releaseName: renamed-release
 
   - name: web-app-ns
     path: apps/web-app
