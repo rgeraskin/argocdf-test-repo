@@ -53,7 +53,7 @@ applications:
 
   - name: web-app-ns
     path: apps/web-app
-    namespace: base-ns
+    namespace: kube-system
 
   # --- helm: schema validation (master renders because skipSchemaValidation
   #     is set; the case branch REMOVES the flag -> schema render error in the
