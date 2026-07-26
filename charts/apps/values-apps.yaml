@@ -148,7 +148,7 @@ applications:
   - name: private-app
     chart: private-app
     repoURL: 127.0.0.1.nip.io:5317/charts
-    targetRevision: 0.1.0
+    targetRevision: 0.2.0
 
   # --- shared chart consumed BY PATH from charts/ (not vendored per app):
   #     one chart edit fans out to every consuming app
