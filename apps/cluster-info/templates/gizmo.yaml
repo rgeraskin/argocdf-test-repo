@@ -1,0 +1,19 @@
+# A custom resource whose CRD is NOT installed in the cluster - the shape a PR
+# takes when it introduces an operator's CRs before the CRD is applied. kyverno
+# cannot map this GVK to a GVR, so any policy over it is skipped SILENTLY, and
+# without --continue-on-fail this one document would destroy the whole report.
+#
+# The group is DELIBERATELY not example.com: apps/widget-operator ships a CRD for
+# example.com/v1 Widget, and the controller-backed cluster really installs it
+# (kubectl get crd -> widgets.example.com), so a CR in THAT group would be
+# mappable there while staying unmappable under bootstrap.sh --static, which
+# applies only the Application set - and expectations must be mode-agnostic.
+# Nothing in the report would reveal such a slip either: no policy targets these
+# kinds, so a mappable CR produces no finding and the pinned bytes never move.
+# This group has no CRD in either mode, and its name says so.
+apiVersion: notinstalled.example.com/v1
+kind: Gizmo
+metadata:
+  name: {{ .Release.Name }}-gizmo
+spec:
+  size: big
