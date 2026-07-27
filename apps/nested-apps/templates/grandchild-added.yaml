@@ -1,0 +1,25 @@
+# A SECOND depth-2 Application, added by this case only: master's cluster state
+# has no such app, so argocdf can reach it only by recursing into this chart's
+# render. Mirrors grandchild.yaml, pointing at the same app source.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grandchild-added
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+    targetRevision: HEAD
+    path: apps/web-app
+    helm:
+      releaseName: grandchild-added-app
+      values: |
+        greeting: from-added-grandchild
