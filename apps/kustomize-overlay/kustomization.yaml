@@ -1,0 +1,3 @@
+resources:
+  - ../kustomize-base
+namePrefix: overlay-

@@ -1,6 +1,4 @@
 apiVersion: v2
 name: apps
-description: ArgoCD apps-of-apps parent chart that generates child Application resources
-type: application
-version: 0.1.0
-appVersion: "1.0.0"
+description: The root app's chart - emits one child Application per catalog entry (apps-of-apps)
+version: 1.0.0

@@ -1,0 +1,14 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# A policy targeting a CUSTOM RESOURCE must actually evaluate: this finding
+# exists only when kyverno could map argoproj.io/Application to a GVR, i.e. when
+# the lint adapter reached argocdf's cluster (propagated context). Offline or
+# against the wrong cluster the resource is skipped and this line disappears.
+must:\[target\] \[kyverno/disallow-kube-system-apps\] Application/web-app-ns: Applications must not deploy into the kube-system namespace
+# Base still targets base-ns, so the finding is target-only.
+must-not:\[base\] \[kyverno/disallow-kube-system-apps\]
+# The spec change itself must be visible, and it must reach the child's render.
+must:^\+        namespace: kube-system
+must:^\+    namespace: kube-system

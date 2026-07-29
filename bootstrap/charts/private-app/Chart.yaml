@@ -1,0 +1,4 @@
+apiVersion: v2
+name: private-app
+description: Seed chart for the private in-cluster registry - bootstrap.sh packages and pushes it as 0.1.0 and 0.2.0 (the version is overridden at package time; the case branch bumps targetRevision between them)
+version: 0.0.0

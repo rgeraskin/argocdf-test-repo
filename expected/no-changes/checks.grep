@@ -1,0 +1,7 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=0
+# affected-but-unchanged: comment-only catalog edit
+must:# Applications affected: 1
+must:# Applications changed: 0

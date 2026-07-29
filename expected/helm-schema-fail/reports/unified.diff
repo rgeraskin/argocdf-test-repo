@@ -1,0 +1,24 @@
+# ArgoCD Diff: master → case/helm-schema-fail
+# Application: root-app (argocd)
+--- base/argocd/argoproj.io/Application/schema-app
++++ target/argocd/argoproj.io/Application/schema-app
+@@ -9,8 +9,6 @@
+         server: https://kubernetes.default.svc
+     project: default
+     source:
+-        helm:
+-            skipSchemaValidation: true
+         path: apps/schema-app
+         repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+         targetRevision: HEAD
+
+# Application: schema-app (argocd)
+# Error: failed to render target branch: failed to render source 0: failed to execute helm template command: failed to get command args to log: `helm template . --name-template schema-app --namespace default --kube-version 1.34.8 <api versions removed> --include-crds` failed exit status 1: Error: values don't meet the specifications of the schema(s) in the following chart(s):
+# schema-app:
+# - at '/replicas': got string, want integer
+
+# Summary
+# Applications affected: 2
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified
+# Errors: 1

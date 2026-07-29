@@ -1,0 +1,17 @@
+# ArgoCD Diff: master → case/multisource-values-ref
+# Application: greeter (argocd)
+--- base/ConfigMap/greeter-cm
++++ target/ConfigMap/greeter-cm
+@@ -1,6 +1,6 @@
+ apiVersion: v1
+ data:
+-    greeting: from-ref-file
++    greeting: ref-updated
+ kind: ConfigMap
+ metadata:
+     name: greeter-cm
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified

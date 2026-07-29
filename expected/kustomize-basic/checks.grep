@@ -1,0 +1,11 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# shared path: both apps re-render with the edit
+must:^\+    tier: advanced
+must:ConfigMap/kust-cm
+must:ConfigMap/base-kust-cm
+# pre-existing :latest violation must be pinned on BOTH sides
+must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/kust-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/kust-web

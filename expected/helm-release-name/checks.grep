@@ -1,0 +1,9 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+2,-2,~1
+# rename = adds + removes, never a modify
+must:target/apps/Deployment/renamed-release-web
+must:base/apps/Deployment/base-release-web
+must:^\+    name: renamed-release-cm
+must:^-    name: base-release-cm

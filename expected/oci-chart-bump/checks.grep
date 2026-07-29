@@ -1,0 +1,6 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~3
+must:^\+        targetRevision: 6\.7\.1
+must:podinfo:6\.7\.1

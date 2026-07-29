@@ -1,0 +1,8 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# the external repo must be cloned at each side's targetRevision:
+# podinfo's kustomize dir pins its own image per tag
+must:^\+.*image: ghcr\.io/stefanprodan/podinfo:6\.8\.0
+must:^-.*image: ghcr\.io/stefanprodan/podinfo:6\.7\.0

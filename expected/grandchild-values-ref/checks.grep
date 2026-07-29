@@ -1,0 +1,20 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A depth-2 app configured by a values FILE rather than the parent's inline
+# helm.values, with that file outside every app's source path. Path matching cannot
+# attribute this change to anything, so the finding below exists only if argocdf
+# resolved grandchild-ref's $vals/apps/grandchild-values/values.yaml against its
+# ref source (App.helmValueFilesAffected) - and only if it then rendered the app
+# from GIT on each side.
+must:ConfigMap/grandchild-ref-app-cm
+must:^-    greeting: from-grandchild-ref$
+must:^\+    greeting: ref-updated-grandchild$
+# The chart's own default must never surface: seeing it would mean the ref value
+# file was not applied on that side, which is the failure this case is built to
+# catch (it would still show a "change", just the wrong one).
+must-not:greeting: default
+# The sibling depth-2 app takes its value inline from the parent chart and shares
+# nothing with this one - if it appears, the recursion mixed the two apps' specs.
+must-not:greeting: from-grandchild$

@@ -1,0 +1,30 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+2,-0,~0
+# What happens to a policy over a kind the cluster cannot map. argocdf renders
+# manifests that need not exist in the cluster yet, so a PR introducing an
+# operator's CRs before its CRD is applied is routine — and kyverno can only
+# evaluate a resource whose GVK it can map to a GVR.
+#
+# The Deployment finding is the load-bearing assertion: it proves kyverno RAN and
+# that --continue-on-fail preserved its findings despite the unmappable document
+# in the same input. Drop that flag and kyverno returns an empty report (verified:
+# rc 1, zero bytes, "failed to map gvk to gvr"), this line disappears, and the
+# case fails.
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/cluster-info-web
+# The unmappable CR yields NO finding - it is skipped silently. That is the hazard
+# the README documents: policies over such kinds do not run and the report still
+# reads clean. Scoped to LINT lines, because the manifest diff legitimately names
+# the Gizmo (see the must: below). The kind is deliberately NOT the example.com
+# Widget that widget-operator's CRD makes mappable in the controller-backed
+# cluster - see the fixture's own comment.
+must-not:\[kyverno/[^]]*\] .*Gizmo
+# And no ERROR line either: the skip is silent today. If kyverno ever starts
+# reporting unmappable kinds as `error` results, the adapters now surface them and
+# this case fails, which is the prompt to re-read the contract rather than absorb
+# a behavior change unnoticed.
+must-not:\[kyverno/[^]]*\] ERROR
+# The CR really is in the linted input - without this the must-not above would
+# also pass for a case that simply never rendered one.
+must:^\+kind: Gizmo

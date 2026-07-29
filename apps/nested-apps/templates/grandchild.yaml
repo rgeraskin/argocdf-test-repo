@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grandchild
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+    targetRevision: HEAD
+    path: apps/web-app
+    helm:
+      releaseName: grandchild-app
+      values: |
+        greeting: {{ .Values.grandchild.greeting }}

@@ -1,0 +1,40 @@
+# A depth-2 Application whose VALUES live outside its chart's source path: the
+# chart is apps/ref-consumer, the values are apps/grandchild-values/values.yaml,
+# reached through a $vals ref source. Its sibling grandchild.yaml takes its value
+# from the parent chart's INLINE helm.values instead, so the two cover the two ways
+# a depth-2 app can be configured.
+#
+# The distinction that matters: a change to apps/grandchild-values/ matches no
+# app's source path, so this app can only be found by resolving the $ref - and it
+# must be present in the cluster for that to happen, since its parent is not
+# affected by such a change and is therefore never rendered. Both bootstrap modes
+# apply this chart's render, so the app exists either way.
+#
+# The chart is ref-consumer, used by nothing else on purpose: pointing it at
+# apps/web-app would make this app affected by every web-app fixture case and add a
+# section to five unrelated pins.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grandchild-ref
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+      targetRevision: HEAD
+      path: apps/ref-consumer
+      helm:
+        releaseName: grandchild-ref-app
+        valueFiles:
+          - $vals/apps/grandchild-values/values.yaml
+    - repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+      targetRevision: HEAD
+      ref: vals

@@ -1,0 +1,21 @@
+# The ONLY Application applied directly to the cluster: the root app. Every
+# test app is a child it emits from charts/apps/values-apps.yaml (apps-of-apps).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+    targetRevision: HEAD
+    path: charts/apps
+    helm:
+      valueFiles:
+        - values-apps.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}

@@ -1,14 +1,5 @@
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Secrets (never commit)
-**/secrets/
-*.secret.yaml
-*-secret.yaml
+out/
+# Agent worktrees of this submodule land here. They must never be committed:
+# on a case/* branch a stray `git add -A` would sweep a whole second checkout
+# into the branch (the same trap the never-`git add -A` rule guards against).
+.claude/

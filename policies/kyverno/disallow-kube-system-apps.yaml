@@ -1,0 +1,27 @@
+# Governance policy for the Applications an apps-of-apps parent emits: no child
+# app may deploy into kube-system. CEL ValidatingAdmissionPolicy applied by the
+# kyverno CLI via scripts/lint-kyverno.sh, same as the workload policy.
+#
+# This policy targets a CUSTOM RESOURCE, which is why the adapter runs kyverno
+# in --cluster mode: kyverno must map argoproj.io/v1alpha1 Application to a GVR
+# to evaluate it at all, and it learns that from the cluster argocdf is diffing
+# against (reached through the ARGOCDF_CONTEXT/ARGOCDF_KUBECONFIG that argocdf
+# exports to lint commands). Offline, these resources are skipped instead —
+# so case/lint-cr-policy failing means CRD resolution broke, not the policy.
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: disallow-kube-system-apps
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [argoproj.io]
+        apiVersions: [v1alpha1]
+        operations: [CREATE, UPDATE]
+        resources: [applications]
+  validations:
+    - expression: >-
+        !has(object.spec.destination) || !has(object.spec.destination.namespace) ||
+        object.spec.destination.namespace != 'kube-system'
+      message: "Applications must not deploy into the kube-system namespace"

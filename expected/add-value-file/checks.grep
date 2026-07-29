@@ -1,0 +1,8 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=9 changed=2 resources=+0,-0,~2
+# the NEW values file must be wired into the Application spec...
+must:^\+                - new-env.yaml
+# ...and its value must reach the rendered ConfigMap (file absent on base)
+must:^\+    greeting: from-new-file

@@ -1,0 +1,26 @@
+# Minimal ArgoCD control-plane ConfigMaps/Secrets for HERMETIC mode only:
+# argocdf's --repo-creds cluster goes through ArgoCD's own settings manager
+# (util/settings), which expects argocd-cm/argocd-secret to exist. Full mode
+# gets the real ones from install.yaml - bootstrap.sh must NOT apply these
+# there (they would clobber the installed data).
+#
+# NOTE: these stubs carry NO credentials. The private registry's credentials
+# live in repo-secret.yaml (a Secret labeled argocd.argoproj.io/secret-type:
+# repository, applied in BOTH modes) - the native ArgoCD store that the real
+# repo-server reads to authenticate pulls, and the same store argocdf's
+# --repo-creds cluster reads through the same ArgoCD code.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-secret
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd

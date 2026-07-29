@@ -1,0 +1,5 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=8 changed=8 resources=+0,-0,~8
+must:^\+    edited: "yes"

@@ -1,0 +1,25 @@
+# A DELIBERATELY broken policy, used by case/lint-broken-policy alone (wired
+# through the harness's CASE_ARGS). The expression references a field that does
+# not exist, so kyverno reports result=error - it never gets far enough to pass or
+# fail - and argocdf surfaces that as an ERROR-marked finding.
+#
+# It must NOT live in policies/kyverno: a broken policy there would stop every
+# other lint case from producing the findings they pin, which is precisely the
+# failure this case exists to make visible.
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: broken-expression
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [apps]
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [deployments]
+  validations:
+    # Single-line on purpose: a multi-line expression is echoed into the error
+    # message with its newlines folded to spaces, which makes an ugly pin.
+    - expression: "object.spec.nonexistentField == 'whatever'"
+      message: "never reported: the expression errors before it can fail"

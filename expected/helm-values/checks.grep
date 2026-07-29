@@ -1,0 +1,9 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=8 changed=8 resources=+0,-0,~8
+# chart values edit must flip replicas in the rendered Deployments
+must:^\+    replicas: 2
+# the shared apps/web-app path must fan out beyond the primary app
+must:Deployment/web-app-files-web
+must:Deployment/base-release-web

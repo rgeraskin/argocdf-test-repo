@@ -1,0 +1,17 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# The built-in kyverno adapter passes the resolved context as a Go field rather
+# than through ARGOCDF_CONTEXT, so this is the case that proves that wiring: the
+# policy targets a CUSTOM RESOURCE (argoproj.io Application), which kyverno can
+# only evaluate once it has mapped that GVK to a GVR from argocdf's cluster.
+# Offline, or against the wrong cluster, the resource is skipped and the finding
+# disappears. A workload policy could not prove this - core kinds map without a
+# cluster, so lint-builtin would pass even with the context wiring broken.
+must:\[target\] \[kyverno/disallow-kube-system-apps\] Application/web-app-ns: Applications must not deploy into the kube-system namespace
+# Base still targets base-ns, so the finding is target-only.
+must-not:\[base\] \[kyverno/disallow-kube-system-apps\]
+# The spec change itself must be visible, and must reach the child's render.
+must:^\+        namespace: kube-system
+must:^\+    namespace: kube-system

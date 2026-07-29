@@ -1,0 +1,93 @@
+# ArgoCD Diff: master → case/helm-template-edit
+# Application: grandchild (argocd)
+--- base/ConfigMap/grandchild-app-cm
++++ target/ConfigMap/grandchild-app-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-grandchild
+     namespace: default
+     numeric: fallback
+
+# Application: web-app (argocd)
+--- base/ConfigMap/web-app-cm
++++ target/ConfigMap/web-app-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-values
+     namespace: default
+     numeric: fallback
+
+# Application: web-app-files (argocd)
+--- base/ConfigMap/web-app-files-cm
++++ target/ConfigMap/web-app-files-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-override-file
+     namespace: default
+     numeric: fallback
+
+# Application: web-app-inline (argocd)
+--- base/ConfigMap/web-app-inline-cm
++++ target/ConfigMap/web-app-inline-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-inline
+     namespace: default
+     numeric: fallback
+
+# Application: web-app-named (argocd)
+--- base/ConfigMap/base-release-cm
++++ target/ConfigMap/base-release-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-values
+     namespace: default
+     numeric: fallback
+
+# Application: web-app-ns (argocd)
+--- base/ConfigMap/web-app-ns-cm
++++ target/ConfigMap/web-app-ns-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-values
+     namespace: base-ns
+     numeric: fallback
+
+# Application: web-app-object (argocd)
+--- base/ConfigMap/web-app-object-cm
++++ target/ConfigMap/web-app-object-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-object
+     namespace: default
+     numeric: fallback
+
+# Application: web-app-params (argocd)
+--- base/ConfigMap/web-app-params-cm
++++ target/ConfigMap/web-app-params-cm
+@@ -1,5 +1,6 @@
+ apiVersion: v1
+ data:
++    edited: "yes"
+     greeting: from-param
+     namespace: default
+     numeric: "0123"
+
+# Summary
+# Applications affected: 8
+# Applications changed: 8
+# Resources: +0 added, -0 removed, ~8 modified

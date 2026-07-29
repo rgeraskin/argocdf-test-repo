@@ -1,0 +1,18 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+1,-0,~1
+# The BUILT-IN adapters (--lint-kyverno / --lint-conftest) must reach the report
+# through the same path a shell command does. This case carries the identical
+# fixture to lint-two-adapters, so the two expectation dirs differ only in the
+# title line - which is what pins the built-ins as equivalent to the shell
+# adapters they replace, rather than merely working.
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/cluster-info-web
+must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+# Both adapters must be merged, and the fixed order (kyverno then conftest) is
+# report-visible, so a reordering shows up here.
+must-not:\[base\] \[kyverno/
+must-not:\[base\] \[conftest/
+# The edits that trigger them must actually reach the render.
+must:^\+.*image: nginx:latest
+must:^\+.*note:.*password=placeholder

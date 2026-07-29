@@ -1,0 +1,20 @@
+# ArgoCD Diff: master → case/shared-chart-edit
+# Application: service-alpha (argocd)
+--- base/ConfigMap/service-alpha-svc-cm
++++ target/ConfigMap/service-alpha-svc-cm
+@@ -1,6 +1,6 @@
+ apiVersion: v1
+ data:
+-    tier: standard
++    tier: enhanced
+ kind: ConfigMap
+ metadata:
+     name: service-alpha-svc-cm
+
+# Application: service-beta (argocd)
+# No changes
+
+# Summary
+# Applications affected: 2
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified

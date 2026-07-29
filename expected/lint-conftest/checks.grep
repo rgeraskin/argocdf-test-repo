@@ -1,0 +1,17 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A SECOND lint tool must reach the report through the same contract: this
+# finding exists only when argocdf ran the case's extra --lint command
+# (scripts/lint-conftest.sh, added for this case alone via the harness's
+# CASE_ARGS) and kept its stdout line. conftest is OFFLINE, so unlike
+# lint-cr-policy this proves nothing about cluster propagation - only that the
+# lint contract is tool-agnostic.
+must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+# Base still carries the clean note, so the finding is target-only. This also
+# fails if the adapter reports the same document twice (once per side).
+must-not:\[base\] \[conftest/
+# The values edit itself must reach the rendered ConfigMap - a finding without
+# it would mean conftest linted something other than this render.
+must:^\+.*note:.*password=placeholder

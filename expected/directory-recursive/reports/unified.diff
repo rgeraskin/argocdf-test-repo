@@ -1,0 +1,26 @@
+# ArgoCD Diff: master → case/directory-recursive
+# Application: nested-manifests (argocd)
+--- base/ConfigMap/rec-hidden
++++ target/ConfigMap/rec-hidden
+@@ -1,6 +1,6 @@
+ apiVersion: v1
+ data:
+-    k: hidden
++    k: hidden2
+ kind: ConfigMap
+ metadata:
+     name: rec-hidden
+--- base/Secret/rec-nested
++++ target/Secret/rec-nested
+@@ -3,5 +3,5 @@
+ metadata:
+     name: rec-nested
+ stringData:
+-    k: nested
++    k: nested2
+ 
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~2 modified

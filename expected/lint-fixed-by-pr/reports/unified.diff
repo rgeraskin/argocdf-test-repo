@@ -1,0 +1,33 @@
+# ArgoCD Diff: master → case/lint-fixed-by-pr
+# Application: kustomize-app (argocd)
+# ⚠ 1 warning(s):
+#   • [base] [kyverno/disallow-latest-tag] Deployment/kust-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+--- base/apps/Deployment/kust-web
++++ target/apps/Deployment/kust-web
+@@ -12,6 +12,6 @@
+                 app: kust
+         spec:
+             containers:
+-                - image: nginx:latest
++                - image: nginx:1.27.0
+                   name: web
+ 
+
+# Application: kustomize-app-overrides (argocd)
+# ⚠ 1 warning(s):
+#   • [base] [kyverno/disallow-latest-tag] Deployment/base-kust-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+--- base/apps/Deployment/base-kust-web
++++ target/apps/Deployment/base-kust-web
+@@ -12,6 +12,6 @@
+                 app: kust
+         spec:
+             containers:
+-                - image: nginx:latest
++                - image: nginx:1.27.0
+                   name: web
+ 
+
+# Summary
+# Applications affected: 2
+# Applications changed: 2
+# Resources: +0 added, -0 removed, ~2 modified

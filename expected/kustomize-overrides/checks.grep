@@ -1,0 +1,12 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+2,-2,~1
+# overrides must apply: prefix rename, namespace, labels, image transform
+must:Deployment/pre-kust-web
+must:^\+.*namespace: production
+must:team: platform
+must:nginx:1\.27\.1
+# the images transform pins :latest on target -> [base]-only finding
+must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web
+must-not:\[target\] \[kyverno

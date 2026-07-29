@@ -1,0 +1,3 @@
+# Overridden by the catalog's helm.parameters entry, so the rendered value proves
+# the parameter arrived rather than this default.
+replicas: 1

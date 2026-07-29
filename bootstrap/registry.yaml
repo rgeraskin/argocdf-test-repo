@@ -1,0 +1,82 @@
+# Private OCI chart registry the auth cases pull from. One URL works from
+# BOTH the host and inside the cluster: 127.0.0.1.nip.io resolves to 127.0.0.1
+# on the host (public nip.io wildcard DNS -> kind extraPortMappings -> the
+# NodePort below), while in-cluster CoreDNS carries an authoritative hosts
+# entry pointing the same name at this Service's FIXED ClusterIP (bootstrap.sh
+# patches the Corefile), so pods never consult nip.io.
+#
+# The credentials (e2e/e2e, bcrypt below) are deliberately committed: they
+# protect a throwaway in-cluster registry that exists only to test argocdf's
+# credential plumbing. Nothing real. TLS is a bootstrap-generated self-signed
+# cert (the repository Secret sets insecure: "true").
+apiVersion: v1
+kind: Secret
+metadata:
+  name: registry-htpasswd
+  namespace: argocd
+stringData:
+  htpasswd: "e2e:$2y$05$NpAFDQB1YLG28Tf4nMs2P..1jxKopnWR1lIo/d/tl47kUUQ4TDMvi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+        - name: registry
+          image: registry:3.0.0
+          env:
+            - name: REGISTRY_AUTH
+              value: htpasswd
+            - name: REGISTRY_AUTH_HTPASSWD_REALM
+              value: e2e-registry
+            - name: REGISTRY_AUTH_HTPASSWD_PATH
+              value: /auth/htpasswd
+            - name: REGISTRY_HTTP_TLS_CERTIFICATE
+              value: /tls/tls.crt
+            - name: REGISTRY_HTTP_TLS_KEY
+              value: /tls/tls.key
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: htpasswd
+              mountPath: /auth
+              readOnly: true
+            - name: tls
+              mountPath: /tls
+              readOnly: true
+      volumes:
+        - name: htpasswd
+          secret:
+            secretName: registry-htpasswd
+        - name: tls
+          secret:
+            secretName: registry-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+  namespace: argocd
+spec:
+  type: NodePort
+  # Fixed ClusterIP: the CoreDNS hosts entry for 127.0.0.1.nip.io must be
+  # static (kind's default service CIDR is 10.96.0.0/16).
+  clusterIP: 10.96.100.100
+  selector:
+    app: registry
+  ports:
+    - name: registry
+      port: 5317
+      targetPort: 5000
+      nodePort: 30517

@@ -1,0 +1,9 @@
+# Renders the chart version so a targetRevision bump produces a REAL manifest
+# diff (otherwise the case would be a hollow pin).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: private-app
+data:
+  message: {{ .Values.message | quote }}
+  chartVersion: {{ .Chart.Version | quote }}

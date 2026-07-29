@@ -1,0 +1,20 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+1,-0,~1
+# Both --lint commands must reach the SAME report. One finding from each tool on
+# one app is the whole point: if argocdf ran only the first command, or let one
+# command's stdout clobber the other's, exactly one of these two lines survives
+# and the case fails. lint-conftest proves the second adapter works at all; this
+# proves the two are merged rather than exclusive.
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/cluster-info-web
+must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+# Neither tool may report on base: the Deployment does not exist there and the
+# ConfigMap note is still clean. A both-sides finding would mean the label
+# semantics broke, not that the policies fired.
+must-not:\[base\] \[kyverno/
+must-not:\[base\] \[conftest/
+# The two edits that trigger them must actually reach the render - findings
+# without them would mean the linters saw something other than this diff.
+must:^\+.*image: nginx:latest
+must:^\+.*note:.*password=placeholder

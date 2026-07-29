@@ -1,0 +1,186 @@
+# The case catalog: every entry becomes a child Application (apps-of-apps).
+# This file is the git-side replacement for "apply Applications to the cluster"
+# - case branches that change an app's SPEC edit this file; branches that
+# change rendered CONTENT edit the case's fixture dir under apps/.
+#
+# It lives inside charts/apps/ ON PURPOSE: edits here register as changes to
+# the root app's source path, so argocdf re-renders the root app and discovers
+# added/removed/modified children recursively.
+applications:
+  # --- helm: fixture-driven cases (branch edits apps/<name>/...)
+  - name: web-app
+    path: apps/web-app
+
+  - name: web-app-files
+    path: apps/web-app
+    helm:
+      valueFiles:
+        - values.yaml
+        - overrides.yaml
+
+  # --- helm: spec-driven cases (branch edits THIS file)
+  - name: web-app-inline
+    path: apps/web-app
+    helm:
+      values: |
+        greeting: from-inline
+
+  - name: web-app-object
+    path: apps/web-app
+    helm:
+      valuesObject:
+        greeting: from-object
+
+  # TWO parameters on purpose: the render must show both applied, which one
+  # parameter could never demonstrate. Deliberately NO forceString here - it would
+  # be inert twice over (helm never int-parses a leading zero, and this chart quotes
+  # every value), so it belongs on the typed-params app below, where the flag has a
+  # visible effect. The leading zero is the point of `numeric`: it must survive as
+  # "0123"/"0456" rather than being coerced to 123/456.
+  - name: web-app-params
+    path: apps/web-app
+    helm:
+      parameters:
+        - name: greeting
+          value: from-param
+        - name: numeric
+          value: "0123"
+
+  - name: web-app-named
+    path: apps/web-app
+    helm:
+      releaseName: base-release
+
+  - name: web-app-ns
+    path: apps/web-app
+    namespace: base-ns
+
+  # --- helm: schema validation (master renders because skipSchemaValidation
+  #     is set; the case branch REMOVES the flag -> schema render error in the
+  #     report; exit stays 2 because the root app's spec change is a change)
+  - name: schema-app
+    path: apps/schema-app
+    helm:
+      skipSchemaValidation: true
+
+  # --- helm: CRDs from crds/ (argocd renderer includes them via --include-crds)
+  - name: widget-operator
+    path: apps/widget-operator
+
+  # --- helm: .Capabilities plumbing (--kube-version)
+  - name: cluster-info
+    path: apps/cluster-info
+
+  # --- remote OCI chart, scheme-less repoURL (the ArgoCD enableOCI form)
+  - name: oci-podinfo
+    chart: podinfo
+    repoURL: ghcr.io/stefanprodan/charts
+    targetRevision: 6.7.0
+    helm:
+      skipTests: true
+
+  # --- multi-source: chart + $values ref resolved against the repo root
+  - name: greeter
+    sources:
+      - path: apps/greeter
+        helm:
+          valueFiles:
+            - $vals/apps/greeter/prod-values.yaml
+      - ref: vals
+
+  # --- external repository source (public; cloned at targetRevision)
+  - name: external-podinfo
+    repoURL: https://github.com/stefanprodan/podinfo.git
+    targetRevision: 6.7.0
+    path: kustomize
+
+  # --- local chart whose Chart.yaml pulls an OCI dependency AND a classic
+  #     HTTP(S) dependency (helm dependency build paths; skipTests: podinfo's
+  #     test hooks embed random names)
+  - name: umbrella-app
+    path: apps/umbrella-app
+    helm:
+      skipTests: true
+
+  # --- private OCI chart behind auth: pulled from the in-cluster registry
+  #     (bootstrap/registry.yaml) with credentials resolved from the cluster
+  #     repository Secret - the --repo-creds cluster path end-to-end
+  - name: private-app
+    chart: private-app
+    repoURL: 127.0.0.1.nip.io:5317/charts
+    targetRevision: 0.1.0
+
+  # --- shared chart consumed BY PATH from charts/ (not vendored per app):
+  #     one chart edit fans out to every consuming app
+  - name: service-alpha
+    path: charts/service
+
+  - name: service-beta
+    path: charts/service
+    helm:
+      values: |
+        tier: premium
+
+  # --- helm.parameters TYPING: this app's template renders its value unquoted, so
+  #     the YAML scalar type is visible in a report. The parameter here carries no
+  #     forceString; case/helm-force-string adds it, and the diff is the type flip
+  #     (replicas: 2 -> "2") that --set-string produces. web-app-params above
+  #     cannot show this: its chart quotes every value.
+  - name: typed-params
+    path: apps/typed-params
+    helm:
+      parameters:
+        - name: replicas
+          value: "2"
+
+  # --- kustomize
+  - name: kustomize-app
+    path: apps/kustomize-app
+
+  # Shares apps/kustomize-app with the kustomize-app app ON PURPOSE: pins the
+  # same-path kustomize-override leak fix (the argocd engine must restore
+  # kustomization.yaml after rendering, so this app's namePrefix never bleeds
+  # into kustomize-app's render).
+  - name: kustomize-app-overrides
+    path: apps/kustomize-app
+    kustomize:
+      namePrefix: base-
+
+  - name: kustomize-overlay
+    path: apps/kustomize-overlay
+
+  - name: kustomize-helm
+    path: apps/kustomize-helm
+
+  # --- directory sources
+  - name: plain-manifests
+    path: apps/plain-manifests
+
+  - name: nested-manifests
+    path: apps/nested-manifests
+    directory:
+      recurse: true
+
+  # --- fileParameters: the release-rollout mechanism (--set-file from a file)
+  - name: versioned-app
+    path: apps/versioned-app
+    helm:
+      fileParameters:
+        - name: image.tag
+          path: version.txt
+
+  # --- depth-2 apps-of-apps: this child's chart renders ANOTHER Application
+  - name: nested-apps
+    path: apps/nested-apps
+
+  # --- multi-source OCI chart + $values ref (the combined spec+values PR shape)
+  - name: podinfo-multisource
+    sources:
+      - chart: podinfo
+        repoURL: ghcr.io/stefanprodan/charts
+        targetRevision: 6.7.0
+        helm:
+          skipTests: true
+          valueFiles:
+            - $cvals/apps/podinfo-values/podinfo-values.yaml
+      - ref: cvals

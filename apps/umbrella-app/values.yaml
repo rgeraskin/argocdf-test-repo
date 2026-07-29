@@ -1,0 +1,4 @@
+ocidep:
+  replicaCount: 1
+classicdep:
+  replicaCount: 1

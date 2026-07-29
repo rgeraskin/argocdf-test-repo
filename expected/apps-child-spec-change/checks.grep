@@ -1,0 +1,8 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+1,-1,~2
+# child re-rendered with per-side git specs after source.path change
+must:^\+        path: apps/widget-operator
+must:CustomResourceDefinition/widgets\.example\.com
+must:^-.*image: nginx:1\.27\.0

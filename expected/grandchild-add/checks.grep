@@ -1,0 +1,18 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+3,-0,~0
+# A depth-2 Application that this PR ADDS. Nothing in the cluster knows it, and
+# the root catalog does not mention it either - argocdf can only reach it by
+# recursing into nested-apps' own RENDER, per side. This is the coverage that
+# would otherwise be lost now that bootstrap materializes the depth-2 apps a
+# real controller creates (grandchild-spec-change covers the opposite, steady
+# state: an app present in BOTH the cluster and the parent's render).
+must:Application/grandchild-added
+# Discovery alone is not enough: argocdf must treat the discovered app as an app
+# and render ITS manifests. Absent on base, so they arrive as additions.
+must:ConfigMap/grandchild-added-app-cm
+must:greeting: from-added-grandchild
+# The pre-existing depth-2 app must be untouched by this case - if it shows up as
+# changed, the recursion is mixing the two apps' specs.
+must-not:^[-+].*greeting: from-grandchild$

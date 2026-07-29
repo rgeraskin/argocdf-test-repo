@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kust-web
+spec:
+  selector:
+    matchLabels:
+      app: kust
+  template:
+    metadata:
+      labels:
+        app: kust
+    spec:
+      containers:
+        - name: web
+          image: nginx:latest

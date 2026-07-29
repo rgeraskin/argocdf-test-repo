@@ -1,0 +1,11 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~1
+must:^\+    k: a2
+# Non-recursive: nested manifests must stay invisible. The case branch EDITS
+# nested/ignored.yaml precisely so this line can fail - an unchanged nested
+# manifest renders identically on both sides, so it never reaches the diff and
+# the pattern would be unfalsifiable. With the edit, recursion turning on for
+# this app adds a ConfigMap/not-rendered-without-recurse section and fails here.
+must-not:not-rendered-without-recurse

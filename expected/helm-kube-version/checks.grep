@@ -1,0 +1,7 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# .Capabilities.KubeVersion must render (auto-detected cluster version)
+must:kubeVersion: v1\.[0-9]+\.[0-9]+
+must:^\+    note: updated

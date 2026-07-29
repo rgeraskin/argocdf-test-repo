@@ -1,0 +1,42 @@
+# ArgoCD Diff: master → case/classic-dependency-bump
+# Application: umbrella-app (argocd)
+--- base/Service/umbrella-app-classicdep
++++ target/Service/umbrella-app-classicdep
+@@ -4,8 +4,8 @@
+     labels:
+         app.kubernetes.io/managed-by: Helm
+         app.kubernetes.io/name: umbrella-app-classicdep
+-        app.kubernetes.io/version: 6.7.0
+-        helm.sh/chart: classicdep-6.7.0
++        app.kubernetes.io/version: 6.7.1
++        helm.sh/chart: classicdep-6.7.1
+     name: umbrella-app-classicdep
+ spec:
+     ports:
+--- base/apps/Deployment/umbrella-app-classicdep
++++ target/apps/Deployment/umbrella-app-classicdep
+@@ -4,8 +4,8 @@
+     labels:
+         app.kubernetes.io/managed-by: Helm
+         app.kubernetes.io/name: umbrella-app-classicdep
+-        app.kubernetes.io/version: 6.7.0
+-        helm.sh/chart: classicdep-6.7.0
++        app.kubernetes.io/version: 6.7.1
++        helm.sh/chart: classicdep-6.7.1
+     name: umbrella-app-classicdep
+ spec:
+     replicas: 1
+@@ -38,7 +38,7 @@
+                   env:
+                     - name: PODINFO_UI_COLOR
+                       value: '#34577c'
+-                  image: ghcr.io/stefanprodan/podinfo:6.7.0
++                  image: ghcr.io/stefanprodan/podinfo:6.7.1
+                   imagePullPolicy: IfNotPresent
+                   livenessProbe:
+                     exec:
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~2 modified

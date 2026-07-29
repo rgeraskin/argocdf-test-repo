@@ -1,0 +1,17 @@
+# ArgoCD Diff: master → case/fileparam-rollout
+# Application: versioned-app (argocd)
+--- base/apps/Deployment/versioned-app-web
++++ target/apps/Deployment/versioned-app-web
+@@ -12,6 +12,6 @@
+                 app: versioned-app
+         spec:
+             containers:
+-                - image: nginx:1.27.0
++                - image: nginx:1.27.1
+                   name: web
+ 
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified

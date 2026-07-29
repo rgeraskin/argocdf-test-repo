@@ -1,0 +1,8 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+3,-0,~0
+# new catalog entry: Application CR added AND child's resources rendered as added
+must:target/argocd/argoproj.io/Application/child-added
+must:^\+    greeting: added-child
+must:target/apps/Deployment/child-added-web

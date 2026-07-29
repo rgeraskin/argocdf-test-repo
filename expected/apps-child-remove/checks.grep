@@ -1,0 +1,10 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-3,~0
+# removed catalog entry: parent's Application CR removed...
+must:base/argocd/argoproj.io/Application/plain-manifests
+# ...AND the child's own resources reported deleted (removed-child discovery)
+must:ConfigMap/plain-a
+must:ConfigMap/plain-b
+must:^-    name: plain-a

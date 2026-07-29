@@ -1,0 +1,36 @@
+# The fixture that makes `helm.parameters` TYPING observable. Two deliberate
+# choices, both load-bearing:
+#
+#   toYaml, not a bare {{ .Values.replicas }} - a Go template prints the string
+#   "2" and the integer 2 identically (`2`), so a plain substitution renders the
+#   same bytes with --set and --set-string and shows nothing. toYaml marshals the
+#   value, so the type survives: `2` versus `"2"`.
+#
+#   kindOf in a label - names the Go type helm parsed the parameter into (int64
+#   with --set, string with --set-string), putting the cause in the report right
+#   next to its effect.
+#
+# Every other fixture pipes its values through `| quote`, which erases the type and
+# leaves forceString with no visible effect anywhere. Note the forceString side is
+# not a VALID Deployment: helm does not validate against the cluster schema and
+# argocdf only renders, so a string replicas is precisely what a user would see in
+# review before the apply that would reject it - which is why it is worth showing.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web
+  labels:
+    value-kind: {{ kindOf .Values.replicas }}
+spec:
+  replicas: {{ toYaml .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27.0

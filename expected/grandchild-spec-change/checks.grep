@@ -1,0 +1,12 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# depth-2 recursion in the steady state: the grandchild is in the cluster too
+# (bootstrap materializes it, as a real controller would), so this pins that the
+# spec change reaches the grandchild's OWN manifests from GIT per side, not from
+# the stale cluster copy - which would show no ConfigMap change at all.
+# case/grandchild-add covers the other shape: a depth-2 app the cluster lacks.
+must:Application/grandchild
+must:^\+    greeting: grandchild-updated
+must:ConfigMap/grandchild-app-cm

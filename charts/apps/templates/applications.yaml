@@ -3,25 +3,57 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $.Values.env }}-{{ .name }}
+  name: {{ .name }}
   namespace: argocd
-  labels:
-    helm.sh/chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ $.Values.global.project }}
-  source:
-    repoURL: {{ $.Values.global.repoURL }}
-    targetRevision: {{ $.Values.global.targetRevision | default "HEAD" }}
-    path: apps/{{ $.Values.env }}/{{ .name }}
+  project: default
   destination:
     server: {{ $.Values.global.destinationServer }}
-    namespace: {{ $.Values.env }}-{{ .name }}
+    namespace: {{ .namespace | default "default" }}
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated: {}
     syncOptions:
       - CreateNamespace=true
+  {{- if .sources }}
+  sources:
+    {{- range .sources }}
+    - repoURL: {{ .repoURL | default $.Values.global.repoURL }}
+      targetRevision: {{ .targetRevision | default $.Values.global.targetRevision }}
+      {{- if .chart }}
+      chart: {{ .chart }}
+      {{- end }}
+      {{- if .path }}
+      path: {{ .path }}
+      {{- end }}
+      {{- if .ref }}
+      ref: {{ .ref }}
+      {{- end }}
+      {{- with .helm }}
+      helm:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- end }}
+  {{- else }}
+  source:
+    repoURL: {{ .repoURL | default $.Values.global.repoURL }}
+    targetRevision: {{ .targetRevision | default $.Values.global.targetRevision }}
+    {{- if .chart }}
+    chart: {{ .chart }}
+    {{- end }}
+    {{- if .path }}
+    path: {{ .path }}
+    {{- end }}
+    {{- with .helm }}
+    helm:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .kustomize }}
+    kustomize:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .directory }}
+    directory:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
 {{- end }}

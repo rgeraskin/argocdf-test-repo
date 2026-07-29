@@ -1,0 +1,50 @@
+# ArgoCD Diff: master → case/add-value-file
+# Application: grandchild (argocd)
+# No changes
+
+# Application: root-app (argocd)
+--- base/argocd/argoproj.io/Application/web-app-files
++++ target/argocd/argoproj.io/Application/web-app-files
+@@ -13,6 +13,7 @@
+             valueFiles:
+                 - values.yaml
+                 - overrides.yaml
++                - new-env.yaml
+         path: apps/web-app
+         repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
+         targetRevision: HEAD
+
+# Application: web-app-files (argocd)
+--- base/ConfigMap/web-app-files-cm
++++ target/ConfigMap/web-app-files-cm
+@@ -1,6 +1,6 @@
+ apiVersion: v1
+ data:
+-    greeting: from-override-file
++    greeting: from-new-file
+     namespace: default
+     numeric: fallback
+ kind: ConfigMap
+
+# Application: web-app (argocd)
+# No changes
+
+# Application: web-app-inline (argocd)
+# No changes
+
+# Application: web-app-named (argocd)
+# No changes
+
+# Application: web-app-ns (argocd)
+# No changes
+
+# Application: web-app-object (argocd)
+# No changes
+
+# Application: web-app-params (argocd)
+# No changes
+
+# Summary
+# Applications affected: 9
+# Applications changed: 2
+# Resources: +0 added, -0 removed, ~2 modified

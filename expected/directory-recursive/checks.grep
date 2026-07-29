@@ -1,0 +1,7 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~2
+# recursion must include hidden dot-dirs and JSON manifests
+must:^\+    k: hidden2
+must:^\+    k: nested2

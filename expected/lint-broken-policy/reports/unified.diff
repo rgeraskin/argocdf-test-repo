@@ -1,0 +1,30 @@
+# ArgoCD Diff: master → case/lint-broken-policy
+# Application: cluster-info (argocd)
+# ⚠ 1 warning(s):
+#   • [target] [kyverno/broken-expression] ERROR Deployment/cluster-info-web: expression 'object.spec.nonexistentField == 'whatever'' resulted in error: no such key: nonexistentField
+--- base/apps/Deployment/cluster-info-web
++++ target/apps/Deployment/cluster-info-web
+@@ -1 +1,18 @@
++apiVersion: apps/v1
++kind: Deployment
++metadata:
++    name: cluster-info-web
++spec:
++    replicas: 1
++    selector:
++        matchLabels:
++            app: cluster-info
++    template:
++        metadata:
++            labels:
++                app: cluster-info
++        spec:
++            containers:
++                - image: nginx:1.27.0
++                  name: web
+ 
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +1 added, -0 removed, ~0 modified

@@ -1,0 +1,7 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=0 changed=0
+# PINNED LIMITATION: ../relative base edits match no app source path
+must:# Applications affected: 0
+must-not:base-cm

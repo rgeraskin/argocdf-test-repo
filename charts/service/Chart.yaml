@@ -1,0 +1,4 @@
+apiVersion: v2
+name: service
+description: Shared chart consumed by several apps via path (not vendored per app)
+version: 1.0.0

@@ -1,0 +1,16 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+0,-0,~2
+# The CLASSIC HTTP(S) Chart.yaml dependency resolves, renders and diffs. Only an
+# index-backed `helm dependency build` can produce these manifests - the argocd
+# engine registers that repository in its throwaway helm home, without
+# --helm-add-repos - so this is the positive proof of that path. Its twin,
+# case/oci-dependency-bump, covers the OCI dependency in the same chart, where
+# the classic one is only proven negatively (an unresolved dependency would
+# replace the whole diff with a render error).
+must:helm\.sh/chart: classicdep-6\.7\.1
+must:podinfo:6\.7\.1
+# The OCI dependency beside it must NOT move: the two cases cross-guard, so a
+# bump that leaked to both dependencies fails here and in oci-dependency-bump.
+must-not:ocidep-6\.7\.1

@@ -1,0 +1,7 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# destination namespace change must reach .Release.Namespace in the render
+must:^\+    namespace: prod-ns
+must:^-    namespace: base-ns

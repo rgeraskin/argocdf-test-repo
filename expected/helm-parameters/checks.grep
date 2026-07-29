@@ -1,0 +1,12 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# Both parameters must reach the render - one parameter could not show that the
+# list is applied in full rather than only its first entry.
+must:^\+    greeting: param-updated
+# The leading zero must survive: helm's strvals refuses to int-parse a value
+# starting with zero, so a coerced "456" here would be a real regression. This says
+# nothing about forceString - case/helm-force-string is where that flag has an
+# observable effect, and this entry deliberately no longer carries it.
+must:^\+    numeric: "0456"

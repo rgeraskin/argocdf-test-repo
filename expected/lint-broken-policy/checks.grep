@@ -1,0 +1,20 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+1,-0,~0
+# A policy whose CEL expression is broken reports result=error - it never reaches
+# pass or fail - and argocdf must SURFACE that, marked, rather than drop it. This
+# is the only end-to-end proof of that path: the unit tests feed hand-written JSON
+# to the parser, so nothing else shows that real kyverno emits an error result,
+# that the adapter forwards it, and that the marker reaches the report.
+#
+# It matters because a dropped error is invisible by construction. kyverno stops at
+# the first failing validation inside a policy, so authors split checks across many
+# small policies (see policies/kyverno-broken/broken-expression.yaml) - and one
+# broken expression among them simply stops producing findings, with the report
+# still reading clean.
+must:\[target\] \[kyverno/broken-expression\] ERROR Deployment/cluster-info-web: expression .* resulted in error: no such key: nonexistentField
+# Base has no Deployment, so the policy matches nothing there and reports nothing.
+must-not:\[base\] \[kyverno/
+# The Deployment the policy chokes on really is in the linted input.
+must:^\+kind: Deployment

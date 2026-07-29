@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArgoCD Diff: master → case/kustomize-basic</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #d4d4d4;
+            --header-color: #569cd6;
+            --added-color: #4ec9b0;
+            --removed-color: #f14c4c;
+            --modified-color: #dcdcaa;
+            --border-color: #404040;
+            --code-bg: #2d2d2d;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1, h2, h3 { color: var(--header-color); }
+        h1 { border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .app-card { background-color: var(--code-bg); border: 1px solid var(--border-color); border-radius: 8px; margin: 15px 0; padding: 15px; }
+        .app-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .app-name { font-size: 1.2em; font-weight: bold; color: var(--header-color); }
+        .app-namespace { color: #888; font-size: 0.9em; }
+        .app-children { margin-left: 30px; border-left: 2px solid var(--border-color); padding-left: 15px; }
+        .badge { padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        .badge-added { background-color: rgba(78, 201, 176, 0.2); color: var(--added-color); }
+        .badge-removed { background-color: rgba(241, 76, 76, 0.2); color: var(--removed-color); }
+        .badge-modified { background-color: rgba(220, 220, 170, 0.2); color: var(--modified-color); }
+        .badge-error { background-color: rgba(241, 76, 76, 0.2); color: var(--removed-color); }
+        .badge-warning { background-color: rgba(220, 220, 170, 0.2); color: var(--modified-color); }
+        .diff-container { background-color: #1a1a1a; border-radius: 4px; overflow: hidden; margin-top: 10px; font-family: monospace; font-size: 0.85em; }
+        .diff-line { padding: 2px 10px; white-space: pre-wrap; word-wrap: break-word; }
+        .diff-add { background-color: rgba(78, 201, 176, 0.15); color: var(--added-color); }
+        .diff-del { background-color: rgba(241, 76, 76, 0.15); color: var(--removed-color); }
+        .diff-context { color: #888; }
+        .summary { background-color: var(--code-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-top: 30px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .summary-item { text-align: center; }
+        .summary-value { font-size: 2em; font-weight: bold; }
+        .summary-label { color: #888; font-size: 0.9em; }
+        .error-message { color: var(--removed-color); padding: 10px; background-color: rgba(241, 76, 76, 0.1); border-radius: 4px; }
+        .warning-message { color: var(--modified-color); padding: 10px; background-color: rgba(220, 220, 170, 0.1); border-radius: 4px; }
+        .no-changes { color: #888; font-style: italic; }
+        .manifest-key { font-family: monospace; font-size: 0.9em; color: #888; }
+        .timestamp { color: #666; font-size: 0.8em; margin-top: 30px; text-align: center; }
+        details { margin-top: 10px; }
+        summary { cursor: pointer; color: var(--header-color); }
+        summary:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ArgoCD Diff: master → case/kustomize-basic</h1>
+<div class="app-card "><div class="app-header"><span class="app-name">kustomize-app</span><span class="app-namespace">(argocd)</span><span class="badge badge-warning">⚠ 2 warning(s)</span><span class="badge badge-modified">~1</span></div><div class="warning-message"><strong>⚠ 2 warning(s):</strong><ul><li>[base] [kyverno/disallow-latest-tag] Deployment/kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)</li><li>[target] [kyverno/disallow-latest-tag] Deployment/kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)</li></ul></div><div style="margin:15px 0;overflow-x:auto;">
+<div style="margin-bottom:8px;"><span style="background-color:rgba(220,220,170,0.2);color:#dcdcaa;padding:2px 8px;border-radius:4px;font-weight:bold;font-family:monospace;">~ ConfigMap/kust-cm</span></div>
+<table style="width:100%;border-collapse:collapse;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;background-color:#1a1a1a;"><tbody><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">1</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">apiVersion: v1</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">1</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">apiVersion: v1</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">2</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">data:</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">2</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">data:</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;background-color:rgba(241, 76, 76, 0.15);">3</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;background-color:rgba(241, 76, 76, 0.15);color:#f14c4c;">    tier: basic</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;background-color:rgba(78, 201, 176, 0.15);">3</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;background-color:rgba(78, 201, 176, 0.15);color:#4ec9b0;">    tier: advanced</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">4</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">kind: ConfigMap</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">4</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">kind: ConfigMap</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">5</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">metadata:</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">5</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">metadata:</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">6</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">    name: kust-cm</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">6</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">    name: kust-cm</td></tr></tbody></table></div></div><div class="app-card "><div class="app-header"><span class="app-name">kustomize-app-overrides</span><span class="app-namespace">(argocd)</span><span class="badge badge-warning">⚠ 2 warning(s)</span><span class="badge badge-modified">~1</span></div><div class="warning-message"><strong>⚠ 2 warning(s):</strong><ul><li>[base] [kyverno/disallow-latest-tag] Deployment/base-kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)</li><li>[target] [kyverno/disallow-latest-tag] Deployment/base-kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)</li></ul></div><div style="margin:15px 0;overflow-x:auto;">
+<div style="margin-bottom:8px;"><span style="background-color:rgba(220,220,170,0.2);color:#dcdcaa;padding:2px 8px;border-radius:4px;font-weight:bold;font-family:monospace;">~ ConfigMap/base-kust-cm</span></div>
+<table style="width:100%;border-collapse:collapse;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;background-color:#1a1a1a;"><tbody><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">1</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">apiVersion: v1</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">1</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">apiVersion: v1</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">2</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">data:</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">2</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">data:</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;background-color:rgba(241, 76, 76, 0.15);">3</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;background-color:rgba(241, 76, 76, 0.15);color:#f14c4c;">    tier: basic</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;background-color:rgba(78, 201, 176, 0.15);">3</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;background-color:rgba(78, 201, 176, 0.15);color:#4ec9b0;">    tier: advanced</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">4</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">kind: ConfigMap</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">4</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">kind: ConfigMap</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">5</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">metadata:</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">5</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">metadata:</td></tr><tr><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">6</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;border-right:1px solid #404040;color:#d4d4d4;">    name: base-kust-cm</td><td style="width:40px;padding:0 8px;text-align:right;color:#6a737d;background-color:#252525;border-right:1px solid #404040;user-select:none;vertical-align:top;">6</td><td style="padding:0 8px;white-space:pre-wrap;word-wrap:break-word;vertical-align:top;color:#d4d4d4;color:#d4d4d4;">    name: base-kust-cm</td></tr></tbody></table></div></div><div class="summary"><h2>Summary</h2><div class="summary-grid"><div class="summary-item">
+		<div class="summary-value" >2</div>
+		<div class="summary-label">Apps affected</div>
+	</div><div class="summary-item">
+		<div class="summary-value" style="color: var(--modified-color)">2</div>
+		<div class="summary-label">Apps changed</div>
+	</div><div class="summary-item">
+		<div class="summary-value" style="color: var(--added-color)">+0</div>
+		<div class="summary-label">Added</div>
+	</div><div class="summary-item">
+		<div class="summary-value" style="color: var(--removed-color)">-0</div>
+		<div class="summary-label">Removed</div>
+	</div><div class="summary-item">
+		<div class="summary-value" style="color: var(--modified-color)">~2</div>
+		<div class="summary-label">Modified</div>

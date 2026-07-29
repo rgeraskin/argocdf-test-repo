@@ -1,6 +1,9 @@
-# Global settings
+# Defaults for the root app's chart. The actual case catalog lives in
+# values-apps.yaml (same directory, referenced by the root app) so
+# that catalog edits register as changes to THIS chart's path.
 global:
   repoURL: https://github.com/rgeraskin/argocdf-test-repo.git
   targetRevision: HEAD
-  project: default
   destinationServer: https://kubernetes.default.svc
+
+applications: []

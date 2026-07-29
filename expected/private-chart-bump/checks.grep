@@ -1,0 +1,8 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# both chart versions must have been PULLED from the authed registry
+must:^\+    chartVersion: 0\.2\.0
+must:^-    chartVersion: 0\.1\.0
+must:hello-from-behind-auth

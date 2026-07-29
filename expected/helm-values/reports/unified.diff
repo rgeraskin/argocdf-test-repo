@@ -1,0 +1,109 @@
+# ArgoCD Diff: master → case/helm-values
+# Application: grandchild (argocd)
+--- base/apps/Deployment/grandchild-app-web
++++ target/apps/Deployment/grandchild-app-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: grandchild-app-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: grandchild-app
+
+# Application: web-app (argocd)
+--- base/apps/Deployment/web-app-web
++++ target/apps/Deployment/web-app-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app
+
+# Application: web-app-files (argocd)
+--- base/apps/Deployment/web-app-files-web
++++ target/apps/Deployment/web-app-files-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-files-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app-files
+
+# Application: web-app-inline (argocd)
+--- base/apps/Deployment/web-app-inline-web
++++ target/apps/Deployment/web-app-inline-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-inline-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app-inline
+
+# Application: web-app-named (argocd)
+--- base/apps/Deployment/base-release-web
++++ target/apps/Deployment/base-release-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: base-release-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: base-release
+
+# Application: web-app-ns (argocd)
+--- base/apps/Deployment/web-app-ns-web
++++ target/apps/Deployment/web-app-ns-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-ns-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app-ns
+
+# Application: web-app-object (argocd)
+--- base/apps/Deployment/web-app-object-web
++++ target/apps/Deployment/web-app-object-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-object-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app-object
+
+# Application: web-app-params (argocd)
+--- base/apps/Deployment/web-app-params-web
++++ target/apps/Deployment/web-app-params-web
+@@ -3,7 +3,7 @@
+ metadata:
+     name: web-app-params-web
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app: web-app-params
+
+# Summary
+# Applications affected: 8
+# Applications changed: 8
+# Resources: +0 added, -0 removed, ~8 modified

@@ -1,0 +1,18 @@
+# ArgoCD Diff: master → case/kustomize-helm
+# Application: kustomize-helm (argocd)
+--- base/apps/Deployment/kusthelm-podinfo
++++ target/apps/Deployment/kusthelm-podinfo
+@@ -8,7 +8,7 @@
+         helm.sh/chart: podinfo-6.7.0
+     name: kusthelm-podinfo
+ spec:
+-    replicas: 1
++    replicas: 2
+     selector:
+         matchLabels:
+             app.kubernetes.io/name: kusthelm-podinfo
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified

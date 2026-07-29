@@ -1,0 +1,21 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+0,-0,~2
+# forceString selects --set-string over --set, and the only way that is visible in
+# a rendered manifest is an UNQUOTED value: apps/typed-params renders replicas
+# without `| quote`, so helm's integer coercion is on display and switching the
+# flag flips the YAML scalar type. The PAIR of lines is the proof - either alone
+# would equally match an ordinary value change.
+must:^-    replicas: 2$
+must:^\+    replicas: "2"$
+# kindOf names the Go type helm parsed the parameter into, so the report states the
+# mechanism outright rather than leaving it to be inferred from the quoting.
+must:^-        value-kind: int64$
+must:^\+        value-kind: string$
+# The spec change itself must reach the parent's render, so the report shows the
+# cause next to the effect.
+must:^\+.*forceString: true$
+# The value is untouched, so no digit may change anywhere: a report that shows a
+# different NUMBER instead of a different TYPE is not this case.
+must-not:replicas: 3

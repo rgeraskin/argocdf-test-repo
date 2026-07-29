@@ -1,0 +1,4 @@
+# Deliberately NOT the value any case asserts on: the depth-2 grandchild-ref
+# Application overrides it from apps/grandchild-values/values.yaml, so a report
+# showing "default" would mean the $ref value file never resolved.
+greeting: default
