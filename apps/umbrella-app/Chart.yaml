@@ -12,5 +12,5 @@ dependencies:
   # it in its throwaway helm home
   - name: podinfo
     alias: classicdep
-    version: 6.7.0
+    version: 6.7.1
     repository: https://stefanprodan.github.io/podinfo
