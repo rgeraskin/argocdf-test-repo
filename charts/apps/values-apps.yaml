@@ -172,6 +172,7 @@ applications:
       parameters:
         - name: replicas
           value: "2"
+          forceString: true
 
   # --- kustomize
   - name: kustomize-app
