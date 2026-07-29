@@ -42,9 +42,9 @@ applications:
     helm:
       parameters:
         - name: greeting
-          value: from-param
+          value: param-updated
         - name: numeric
-          value: "0123"
+          value: "0456"
 
   - name: web-app-named
     path: apps/web-app
