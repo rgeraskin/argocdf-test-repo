@@ -3,4 +3,4 @@
 # file reaches its consumer only through argocdf's $ref value-file matcher
 # (App.helmValueFilesAffected), which resolves $vals/... against the app's ref
 # source. That is what case/grandchild-values-ref pins.
-greeting: from-grandchild-ref
+greeting: ref-updated-grandchild
