@@ -1,0 +1,4 @@
+# Overridden by ../shared-values/vals.yaml, which lives OUTSIDE this chart's
+# directory: the render must read it, and a change to it must reach this app.
+sharedNote: unset
+owner: local

@@ -1,0 +1,18 @@
+# Exhaustiveness: the version file lives in no app's source path, so only the app
+# whose fileParameter names it may appear.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A fileParameter (--set-file) reading from a $ref SOURCE - the release-rollout
+# shape, version file in a values repo rather than the chart. ArgoCD resolves it
+# against the REF repository's root exactly as it resolves $ref value files, and the
+# render cache hashes both lists, but selection matched only valueFiles: an app
+# whose sole reference to a changed file was a $ref fileParameter was silently
+# missing from every report.
+must:^# Application: versioned-ref
+must:^-    image: nginx:2.1.0$
+must:^\+    image: nginx:2.2.0$
+# The chart's fallback must never appear: that would mean the fileParameter did not
+# apply and the case would prove nothing about $ref resolution.
+must-not:nginx:fallback
+# versioned-app carries a LOCAL fileParameter over its own version.txt; this edit is
+# a different file in a different directory and must not reach it.
+must-not:^# Application: versioned-app

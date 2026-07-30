@@ -71,6 +71,46 @@ applications:
   - name: cluster-info
     path: apps/cluster-info
 
+  # This app's value file lives OUTSIDE its source path (`../shared-values/vals.yaml`),
+  # the shared-values-file layout. ArgoCD resolves a relative entry against the
+  # source path and renders it, so argocdf resolves it the same way when deciding
+  # which apps a change affects - no annotation involved (contrast
+  # kustomize-overlay below, whose base is discovered by the RENDERER and can only
+  # be declared).
+  - name: shared-values-app
+    path: apps/shared-values-app
+    helm:
+      valueFiles:
+        - values.yaml
+        - ../shared-values/vals.yaml
+
+  # Same chart as shared-values-app, but the second value file is REPO-ROOT
+  # ABSOLUTE. A leading `/` is not a filesystem path in ArgoCD: it resolves from
+  # the repository root, which is the shape a changed-file matcher gets wrong most
+  # easily (comparing "/apps/..." against repo-relative paths matches nothing).
+  # Points at a DIFFERENT file than shared-values-app so each case stays
+  # single-app.
+  - name: absolute-values-app
+    path: apps/shared-values-app
+    helm:
+      valueFiles:
+        - values.yaml
+        - /apps/shared-values/abs-vals.yaml
+
+  # A fileParameter (--set-file) reading from a $ref SOURCE: the release-rollout
+  # shape, where the version file lives in a values repo rather than the chart's
+  # own directory. ArgoCD resolves the entry against the REF repository's root,
+  # exactly as it resolves $ref value files, so argocdf must match it the same way
+  # - it did not until the two lists became one.
+  - name: versioned-ref
+    sources:
+      - path: apps/versioned-ref
+        helm:
+          fileParameters:
+            - name: imageTag
+              path: $vals/apps/shared-values/version.txt
+      - ref: vals
+
   # --- remote OCI chart, scheme-less repoURL (the ArgoCD enableOCI form)
   - name: oci-podinfo
     chart: podinfo

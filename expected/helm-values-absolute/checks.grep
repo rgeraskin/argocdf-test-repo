@@ -1,0 +1,16 @@
+# Exhaustiveness: only the app that READS this file may appear. shared-values-app
+# shares the same chart path but reads ../shared-values/vals.yaml, a different file,
+# so it must stay out - which is what makes this case single-app.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A leading `/` in a helm valueFiles entry is REPO-ROOT relative in ArgoCD, not a
+# filesystem path. Selection has to resolve it the same way the render does; the
+# matcher used to compare "/apps/shared-values/abs-vals.yaml" against repo-relative
+# changed files and match nothing, and the render cache bypassed on it entirely.
+must:^# Application: absolute-values-app
+must:^-    sharedNote: from-absolute-path$
+must:^\+    sharedNote: from-absolute-path-updated$
+# The chart's own values.yaml is untouched, so the other key stays a context line:
+# this separates "the absolute file was read" from "the whole chart re-rendered".
+must-not:^[-+]    owner:
+# The app that reads the OTHER file in that directory must not be dragged in.
+must-not:^# Application: shared-values-app

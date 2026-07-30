@@ -1,0 +1,4 @@
+# Overridden by a fileParameter reading $vals/apps/shared-values/version.txt - a
+# file in a REF source, outside this chart. `trim` drops the file's trailing
+# newline, as in apps/versioned-app.
+imageTag: fallback

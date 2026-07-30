@@ -1,0 +1,4 @@
+# A values file SHARED between apps, deliberately outside any app's source path.
+# ArgoCD resolves `../shared-values/vals.yaml` relative to the source path, so it
+# renders - and argocdf must attribute a change here to every app reading it.
+sharedNote: from-shared-values

@@ -1,0 +1,20 @@
+# Exhaustiveness: the summary block must be EXACTLY this. The changed file sits
+# under no app's source path, so ONLY the app that reads it may appear - an extra
+# application section here would mean the resolver matched something it should not.
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A change reachable only through a value file OUTSIDE the app's source path
+# (`../shared-values/vals.yaml` from apps/shared-values-app). ArgoCD resolves a
+# relative entry against the source path and renders it, so argocdf resolves it
+# the same way when selecting apps - with ArgoCD's own resolver, not a copy of the
+# rule. Before that, this report was 0 affected: the app rendered from the file
+# and cache-keyed on it, yet a PR touching it reported nothing.
+must:^# Application: shared-values-app
+must:^-    sharedNote: from-shared-values$
+must:^\+    sharedNote: from-shared-values-updated$
+# NO annotation is involved. manifest-generate-paths is the mechanism for
+# dependencies only a RENDERER can discover (see kustomize-relative-base); a value
+# file is a declared field, so it needs no declaration.
+must-not:manifest-generate-paths
+# The app's own values.yaml is untouched, so the other key must stay put: this
+# distinguishes "the outside file was read" from "the whole chart re-rendered".
+must-not:^[-+]    owner:

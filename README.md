@@ -62,9 +62,11 @@ From the argocdf repository (this repo is its `e2e/` submodule):
 
 ```bash
 mise run e2e:bootstrap         # baseline: kind + REAL ArgoCD (controller syncs
-                               # the children). Needs master PUSHED - see below
+                               # the children). Needs master PUSHED - see below.
+                               # Refuses a cluster that is already alive
 mise run e2e:bootstrap-static  # no controller, same Application set applied
-                               # once. No push, no sync wait: the fast loop
+                               # once. No push, no sync wait: the fast loop.
+                               # Refuses a controller-backed cluster
 mise run e2e:run               # build argocdf, run every case, PASS/FAIL table
 mise run e2e:push              # publish: rebase case/* onto master, push master,
                                # force-push branches, prune orphaned remote ones
@@ -78,7 +80,7 @@ mise run e2e:clean             # delete the kind cluster
 | Developing fixtures, regenerating expectations, the review gate | `e2e:bootstrap-static` | No push, no sync wait, and the pins it produces are the same bytes the baseline yields |
 | Verifying the suite, checking argocdf against production shapes | `e2e:bootstrap` | The real control plane: a live controller, its full CRD set, and the actual `argocd-cm`/`argocd-secret` |
 
-Switching from the baseline back to static means recreating the cluster (`e2e:clean`), since a `--static` bootstrap will not uninstall a controller that is already there.
+Switching between the modes means recreating the cluster (`e2e:clean`), and both bootstraps enforce it rather than trusting you to remember. `--static` refuses a cluster that already runs the controller: it would not uninstall it, and root-app is `syncPolicy.automated`, so the controller OWNS the children and renders them from the REMOTE repo - a locally applied app set survives only because `automated: {}` sets neither selfHeal nor prune, and it reverts the moment the remote revision changes, which is what `e2e:push` does. Expectations would then be regenerated against one app set and verified against another, silently. The baseline refuses any cluster that is already alive, rather than reinstalling the control plane under a running controller.
 
 Directly (any argocdf binary):
 

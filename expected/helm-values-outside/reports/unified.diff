@@ -1,0 +1,18 @@
+# ArgoCD Diff: master → case/helm-values-outside
+# Application: shared-values-app (argocd)
+--- base/ConfigMap/shared-values-app-cm
++++ target/ConfigMap/shared-values-app-cm
+@@ -1,7 +1,7 @@
+ apiVersion: v1
+ data:
+     owner: local
+-    sharedNote: from-shared-values
++    sharedNote: from-shared-values-updated
+ kind: ConfigMap
+ metadata:
+     name: shared-values-app-cm
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +0 added, -0 removed, ~1 modified
