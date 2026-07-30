@@ -152,7 +152,7 @@ Every change-intention class observed in a categorization of 109 real production
 
 Three cases pin argocdf's *actual* contract rather than an idealized one — by design, so behavior changes are always conscious:
 
-- `kustomize-relative-base` pins a known limitation: a change to a directory referenced only through a `../relative` kustomize base matches no app's source path, so NO app is reported affected (0 affected / exit 0).
+- `kustomize-relative-base` pins the declaration that makes a `../relative` kustomize base visible: nothing under the overlay's own path changed, so the app is reported *only* because it carries `argocd.argoproj.io/manifest-generate-paths: ../kustomize-base;.` (1 affected / exit 2). Remove that annotation from the catalog and the report returns to 0 affected — the limitation this case pinned before argocdf honored the declaration.
 - `error-invalid-yaml` pins that app-level render errors are REPORT content (error sections per app), not a process failure: exit code stays 0 because no app *changed*.
 - `no-changes` pins the affected-but-unchanged path: a comment-only catalog edit re-renders the root app (1 affected) with zero manifest changes, exit 0.
 

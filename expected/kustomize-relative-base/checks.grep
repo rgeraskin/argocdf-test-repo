@@ -1,7 +1,21 @@
 # Exhaustiveness: the summary block must be EXACTLY this. Any extra
 # application section or changed resource fails here rather than being
 # quietly pinned by the next --regenerate.
-expect:affected=0 changed=0
-# PINNED LIMITATION: ../relative base edits match no app source path
-must:# Applications affected: 0
-must-not:base-cm
+expect:affected=1 changed=1 resources=+0,-0,~1
+# A change reachable ONLY through a `../relative` kustomize base. Nothing under
+# apps/kustomize-overlay changed, so path matching cannot attribute this edit to any
+# app: the overlay is here solely because it DECLARES the base as one of its
+# generating paths (argocd.argoproj.io/manifest-generate-paths: ../kustomize-base;.,
+# resolved by ArgoCD's own code). Remove the annotation from the catalog and this
+# report returns to 0 affected - which is exactly what the case pinned before
+# argocdf honored the declaration.
+must:^# Application: kustomize-overlay
+must:^-    origin: base$
+must:^\+    origin: edited$
+# The overlay's own namePrefix must still be applied, which proves the app rendered
+# through its own kustomization rather than the base being rendered directly.
+must:ConfigMap/overlay-base-cm
+# The two apps whose source path IS apps/kustomize-app must NOT appear: the edit
+# lives in apps/kustomize-base and neither of them declares it.
+must-not:^# Application: kustomize-app
+must-not:ConfigMap/kust-cm

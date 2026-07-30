@@ -146,8 +146,17 @@ applications:
     kustomize:
       namePrefix: base-
 
+  # This overlay's base lives OUTSIDE its source path (`resources: ../kustomize-base`),
+  # which no changed-file-to-source-path matching can see. ArgoCD's
+  # manifest-generate-paths annotation is the declaration of what generates the
+  # manifests, and argocdf honors it - so a change to the base is attributed here.
+  # The trailing `;.` is load-bearing: the annotation REPLACES the default rather
+  # than extending it, so without it the app would stop reacting to its own
+  # kustomization.yaml. Verified against a live ArgoCD v3.3.11 controller.
   - name: kustomize-overlay
     path: apps/kustomize-overlay
+    annotations:
+      argocd.argoproj.io/manifest-generate-paths: ../kustomize-base;.
 
   - name: kustomize-helm
     path: apps/kustomize-helm
