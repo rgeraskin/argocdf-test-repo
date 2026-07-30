@@ -3,13 +3,13 @@ name: umbrella-app
 version: 1.0.0
 dependencies:
   # OCI dependency: `helm dependency build` must authenticate/pull via the
-  # registry client (the argocd engine registers this inside its isolated home)
+  # registry client (argocdf registers this inside its isolated helm home)
   - name: podinfo
     alias: ocidep
     version: 6.7.0
     repository: oci://ghcr.io/stefanprodan/charts
-  # Classic HTTP(S) dependency: requires a repo index — the argocd engine
-  # auto-registers it in its throwaway helm home (no --helm-add-repos)
+  # Classic HTTP(S) dependency: requires a repo index — argocdf auto-registers
+  # it in its throwaway helm home
   - name: podinfo
     alias: classicdep
     version: 6.7.0

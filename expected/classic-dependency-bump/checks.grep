@@ -3,9 +3,9 @@
 # quietly pinned by the next --regenerate.
 expect:affected=1 changed=1 resources=+0,-0,~2
 # The CLASSIC HTTP(S) Chart.yaml dependency resolves, renders and diffs. Only an
-# index-backed `helm dependency build` can produce these manifests - the argocd
-# engine registers that repository in its throwaway helm home, without
-# --helm-add-repos - so this is the positive proof of that path. Its twin,
+# index-backed `helm dependency build` can produce these manifests - argocdf
+# registers that repository in its throwaway helm home automatically - so this
+# is the positive proof of that path. Its twin,
 # case/oci-dependency-bump, covers the OCI dependency in the same chart, where
 # the classic one is only proven negatively (an unresolved dependency would
 # replace the whole diff with a render error).

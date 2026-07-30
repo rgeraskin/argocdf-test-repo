@@ -63,7 +63,7 @@ applications:
     helm:
       skipSchemaValidation: true
 
-  # --- helm: CRDs from crds/ (argocd renderer includes them via --include-crds)
+  # --- helm: CRDs from crds/ (rendered with --include-crds, ArgoCD parity)
   - name: widget-operator
     path: apps/widget-operator
 
