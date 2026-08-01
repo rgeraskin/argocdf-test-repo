@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: rec-hidden
 data:
-  k: hidden
+  k: hidden2
