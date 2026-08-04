@@ -6,3 +6,17 @@ expect:affected=8 changed=8 resources=+0,-0,~8
 must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-web
 must:^\+.*image: nginx:latest
 must-not:\[base\] \[kyverno
+# The grandchild's finding specifically: it is the app the row is about, and without
+# this must a lint regression that skipped it would keep the other findings, pass, and
+# be repinned by the next --regenerate.
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/grandchild-app-web
+# The row claims a [target]-only finding on EACH of the 8 consumers; naming only
+# some of them left the rest losable without moving any count (warnings sit
+# outside the expect: summary). One must per app, so lint silently skipping any
+# consumer fails here instead of being repinned.
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/base-release-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-files-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-inline-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-ns-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-object-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/web-app-params-web

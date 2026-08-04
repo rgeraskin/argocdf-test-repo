@@ -15,3 +15,16 @@ must-not:\[base\] \[conftest/
 # The values edit itself must reach the rendered ConfigMap - a finding without
 # it would mean conftest linted something other than this render.
 must:^\+.*note:.*password=placeholder
+# The row's headline is that kyverno ALSO ran and contributed nothing - empty output
+# at exit 0 is "no findings", not a failure. Nothing guarded it: the historical
+# empty-stdout-as-failure bug would have added kyverno lint-failure warnings and every
+# check above would still pass. So no kyverno line, and no shell-adapter failure line,
+# may appear anywhere in this report.
+must-not:\[kyverno
+must-not:\] lint "
+# ...and the absence must be an absence of FINDINGS, not of the invocation: a
+# report cannot distinguish "kyverno ran and matched nothing" from "kyverno was
+# never invoked" (both are empty by the exit-code contract), so the fresh run's
+# LOG must show the kyverno adapter invoked and contributing zero lines. Checked
+# by run.sh at run time; argocdf logs one INFO line per linter invocation.
+must-log:Lint invocation finished.*lint-kyverno\.sh.*lines=0

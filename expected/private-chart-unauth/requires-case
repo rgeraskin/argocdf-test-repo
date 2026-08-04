@@ -1,0 +1,11 @@
+# Cases that must run BEFORE this one, one per line. The harness resolves these into
+# the run order (for a full run) and pulls them in (for a single-case run), so
+# `run.sh private-chart-unauth` works instead of failing by construction.
+#
+# private-chart-bump is the only case that fetches this chart, and this case proves a
+# chart fetched under CLUSTER credentials does not satisfy an anonymous run - which
+# proves nothing if no such chart was ever fetched. Declaring it here replaces the
+# incidental sort order ("bump" < "unauth") with a stated dependency; the glob in
+# cache-precondition still verifies the state actually arrived, so a broken or removed
+# declaration fails loudly rather than quietly disarming the gate.
+private-chart-bump

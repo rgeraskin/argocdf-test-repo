@@ -4,3 +4,8 @@
 expect:affected=1 changed=1 resources=+0,-0,~1
 # $ref values file must resolve against the target branch's file
 must:^\+    greeting: ref-updated
+# The BASE side is what proves the ref file won over the chart's own
+# `greeting: default`: without it, a base-side $ref regression rendering the chart
+# default would produce the same counts and pass every check above.
+must:^-    greeting: from-ref-file$
+must-not:greeting: default

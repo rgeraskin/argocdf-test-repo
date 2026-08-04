@@ -1,0 +1,44 @@
+# Exhaustiveness: root-app's spec change (the catalog edit) plus private-app, which
+# is affected but cannot render at all - so it contributes an error, not a resource.
+expect:affected=2 changed=1 resources=+0,-0,~1 errors=1
+# Identical fixture to private-chart-bump; the only difference is --repo-creds none.
+# There, private-app renders and its ConfigMap shows the new chartVersion. Here no
+# credentials are supplied, so fetching the chart from the in-cluster registry must
+# FAIL. Succeeding would mean a chart downloaded under CLUSTER credentials satisfied
+# an anonymous run: the end-to-end tripwire for the per-mode chart-cache scope.
+#
+# private-chart-bump is the ONLY case that fetches this chart, so it must run first
+# for that to be true - cases run in sort order and "bump" < "unauth". The dependency
+# is checked, not assumed: expected/private-chart-unauth/cache-precondition fails this
+# case if charts/cluster is empty when its cached pass starts.
+#
+# It proves the pull was ATTEMPTED, not that authentication was enforced: without
+# credentials there is also no insecure: "true" for the registry's self-signed cert,
+# so the pull fails TLS verification before reaching auth. The wording after that
+# prefix is Go's x509 and differs per platform, so normalize.sh collapses it - the
+# prefix stays, so a DIFFERENT failure would still break this pin.
+#
+# KNOWN ENVIRONMENTAL FAILURE, deliberately not pinned: if 127.0.0.1.nip.io resolves
+# away from loopback for a window (a rebind-protecting or filtering resolver, a
+# proxy), the anonymous pull fails as "Forbidden" (TLS accepted, HTTP 403) and this
+# pin breaks while bump's authenticated pulls may keep passing - observed
+# intermittently on a dev machine. That is the machine's DNS, not argocdf: pin the
+# name in /etc/hosts (see the README network note).
+must:^# Application: private-app
+must:^# Error: failed to render
+must:failed to fetch helm chart private-app from 127\.0\.0\.1\.nip\.io:5317/charts
+must:tls: failed to verify certificate: <platform-specific>$
+# The temp destination helm was given must NOT appear: it is redacted argocdf-side,
+# because a path that no longer exists is noise in a PR comment and rewrites the
+# comment on every run. The review gate independently bans the placeholders that a
+# leaked path would normalize to.
+must:--destination \(temp dir\)
+# The catalog change itself must still be attributed to the parent, and an app-level
+# render error must stay report CONTENT: changed>0 keeps the exit code at 2.
+must:^# Application: root-app
+must:^\+        targetRevision: 0.2.0$
+must:^# Applications changed: 1$
+must:^# Errors: 1$
+# A successful render would put the chart's own ConfigMap in the report. Its absence
+# is the case: `chartVersion` appears in private-chart-bump and must not here.
+must-not:^[-+]    chartVersion:

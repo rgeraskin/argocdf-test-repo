@@ -1,0 +1,5 @@
+# Identical fixture, one flag apart: the built-in adapters must produce the SAME
+# report as the shell adapters, differing only where the case name appears.
+# review-expected.sh enforces it byte-for-byte after normalizing the names, so
+# the equivalence is a checked claim rather than a review-time observation.
+lint-two-adapters

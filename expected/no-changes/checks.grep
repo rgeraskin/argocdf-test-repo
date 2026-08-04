@@ -5,3 +5,7 @@ expect:affected=1 changed=0
 # affected-but-unchanged: comment-only catalog edit
 must:# Applications affected: 1
 must:# Applications changed: 0
+# Identity, not just cardinality: affected=1 says ONE app re-rendered, this says
+# WHICH. A selection regression that swapped root-app for another single app
+# would keep every count above and be repinned silently.
+must:^# Application: root-app

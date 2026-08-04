@@ -10,3 +10,11 @@ must:nginx:1\.27\.1
 # the images transform pins :latest on target -> [base]-only finding
 must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web
 must-not:\[target\] \[kyverno
+# Indentation-anchored, because the un-anchored patterns above also match the
+# root-app hunk that shows the Application CR's own kustomize block - so a renderer
+# that stopped applying these transformers to the CHILD's resources would still have
+# passed. Rendered resource metadata sits at four spaces and rendered labels at
+# eight; the CR's own copies sit at twelve and sixteen, which is what the loose
+# patterns were matching.
+must:^\+    namespace: production$
+must:^\+        team: platform$

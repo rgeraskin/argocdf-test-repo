@@ -9,3 +9,7 @@ must:ConfigMap/base-kust-cm
 # pre-existing :latest violation must be pinned on BOTH sides
 must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/kust-web
 must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/kust-web
+# The row claims findings on EACH app's Deployment, so pin the second app's pair too:
+# lint regressing to the first app only would otherwise pass and be repinned.
+must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web
+must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web

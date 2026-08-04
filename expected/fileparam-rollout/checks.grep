@@ -4,3 +4,7 @@
 expect:affected=1 changed=1 resources=+0,-0,~1
 # version.txt via helm.fileParameters must land in the image tag
 must:^\+.*image: nginx:1\.27\.1
+# The base side, for the same reason: a --set-file regression rendering the chart's
+# own `image.tag: fallback` would keep the counts and pass on the target line alone.
+must:^-                - image: nginx:1\.27\.0$
+must-not:nginx:fallback

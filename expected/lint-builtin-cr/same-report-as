@@ -1,0 +1,4 @@
+# Identical fixture, one flag apart: the built-in kyverno adapter (with its
+# KubeContext field wiring) must produce the same report as the shell adapter's
+# env-var wiring. Enforced by review-expected.sh modulo the case names.
+lint-cr-policy

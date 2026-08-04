@@ -3,3 +3,14 @@
 # quietly pinned by the next --regenerate.
 expect:affected=8 changed=8 resources=+0,-0,~8
 must:^\+    edited: "yes"
+# Identity, not just cardinality: changed=8 counts the fan-out, these name it.
+# A selection regression swapping one consumer for another keeps all counts
+# and a matching edited-line, so each of the 8 apps sharing the chart is named.
+must:^# Application: grandchild
+must:^# Application: web-app \(
+must:^# Application: web-app-files
+must:^# Application: web-app-inline
+must:^# Application: web-app-named
+must:^# Application: web-app-ns
+must:^# Application: web-app-object
+must:^# Application: web-app-params

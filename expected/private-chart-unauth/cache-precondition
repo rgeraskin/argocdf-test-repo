@@ -1,0 +1,14 @@
+# Globs (relative to the suite cache dir) that must already exist when this case's
+# CACHED pass runs, optionally prefixed "min=N " to require at least N matches.
+# Checked, not assumed: this case proves that a chart fetched under CLUSTER
+# credentials does not satisfy an anonymous run, which proves nothing at all if no
+# such chart was ever fetched. The suite orders private-chart-bump first (see
+# requires-case), and bump's cached pass is what fills these entries; a rename or a
+# dropped case fails loudly here instead of quietly disarming the gate.
+#
+# The glob names the CHART and the count pins BOTH versions (each version is its own
+# cache entry): "some chart is cached" would be satisfiable by any earlier
+# remote-chart case, which is exactly the hollow precondition a review caught. The
+# layout is charts/cluster/<instance>/<key>/private-app - the instance segment is the
+# per-cluster scope (cluster API server + ArgoCD namespace).
+min=2 charts/cluster/*/*/private-app

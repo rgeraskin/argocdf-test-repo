@@ -5,3 +5,8 @@ expect:affected=1 changed=1 resources=+0,-0,~2
 # recursion must include hidden dot-dirs and JSON manifests
 must:^\+    k: hidden2
 must:^\+    k: nested2
+# The branch also edits `nested/notes.txt`, which is NOT a manifest. Without that edit
+# the "stays out" claim was unfalsifiable - an unchanged file cannot reach a diff
+# either way - so its content is now guarded directly (the trick `directory-plain`
+# already uses for its own `ignored.yaml`).
+must-not:not a manifest

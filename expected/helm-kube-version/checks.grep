@@ -5,3 +5,11 @@ expect:affected=1 changed=1 resources=+0,-0,~1
 # .Capabilities.KubeVersion must render (auto-detected cluster version)
 must:kubeVersion: v1\.[0-9]+\.[0-9]+
 must:^\+    note: updated
+# Pinned to the EXACT version the digest-pinned kind node image serves
+# (E2E_KIND_NODE_IMAGE): anything looser survives regeneration under a wrong
+# version - the family pattern this line used to be would have accepted a
+# v1.34-flavored fallback, and `v1\.[0-9]+` before it accepted any version at
+# all, including a compiled-in default. The node image is pinned by digest, so
+# this value only changes when that pin changes; bumping the image updates this
+# line along with the expectations, consciously.
+must:kubeVersion: v1\.34\.8$
