@@ -5,7 +5,7 @@
 <summary>Show diff for <b>cluster-info (argocd)</b> — ⚠️1 🟢+1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/broken-expression] ERROR Deployment/cluster-info-web: expression &#39;object.spec.nonexistentField == &#39;whatever&#39;&#39; resulted in error: no such key: nonexistentField
+> - [target] [lint-kyverno#1/broken-expression] ERROR Deployment/cluster-info-web: expression &#39;object.spec.nonexistentField == &#39;whatever&#39;&#39; resulted in error: no such key: nonexistentField
 
 #### ➕ apps/Deployment/cluster-info-web
 

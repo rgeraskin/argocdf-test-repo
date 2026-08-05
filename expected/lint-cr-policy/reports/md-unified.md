@@ -5,7 +5,7 @@
 <summary>Show diff for <b>root-app (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-kube-system-apps] Application/web-app-ns: Applications must not deploy into the kube-system namespace
+> - [target] [lint#1/disallow-kube-system-apps] Application/web-app-ns: Applications must not deploy into the kube-system namespace
 
 #### 📝 argocd/argoproj.io/Application/web-app-ns
 

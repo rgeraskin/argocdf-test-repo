@@ -5,7 +5,7 @@
 <summary>Show diff for <b>grandchild (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/grandchild-app-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/grandchild-app-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/grandchild-app-web
 
@@ -28,7 +28,7 @@
 <summary>Show diff for <b>web-app (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-web
 
@@ -51,7 +51,7 @@
 <summary>Show diff for <b>web-app-files (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-files-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-files-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-files-web
 
@@ -74,7 +74,7 @@
 <summary>Show diff for <b>web-app-inline (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-inline-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-inline-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-inline-web
 
@@ -97,7 +97,7 @@
 <summary>Show diff for <b>web-app-named (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/base-release-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/base-release-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/base-release-web
 
@@ -120,7 +120,7 @@
 <summary>Show diff for <b>web-app-ns (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-ns-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-ns-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-ns-web
 
@@ -143,7 +143,7 @@
 <summary>Show diff for <b>web-app-object (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-object-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-object-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-object-web
 
@@ -166,7 +166,7 @@
 <summary>Show diff for <b>web-app-params (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/web-app-params-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint#1/disallow-latest-tag] Deployment/web-app-params-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/web-app-params-web
 

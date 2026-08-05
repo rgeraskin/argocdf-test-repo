@@ -1,8 +1,8 @@
 # ArgoCD Diff: master → case/lint-builtin
 # Application: cluster-info (argocd)
 # ⚠ 2 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/cluster-info-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
-#   • [target] [conftest/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key "note" must not carry a plaintext credential
+#   • [target] [lint-kyverno#1/disallow-latest-tag] Deployment/cluster-info-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint-conftest#1/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key "note" must not carry a plaintext credential
 --- base/apps/Deployment/cluster-info-web
 +++ target/apps/Deployment/cluster-info-web
 @@ -1 +1,18 @@

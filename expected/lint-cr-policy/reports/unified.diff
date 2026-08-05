@@ -1,7 +1,7 @@
 # ArgoCD Diff: master → case/lint-cr-policy
 # Application: root-app (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-kube-system-apps] Application/web-app-ns: Applications must not deploy into the kube-system namespace
+#   • [target] [lint#1/disallow-kube-system-apps] Application/web-app-ns: Applications must not deploy into the kube-system namespace
 --- base/argocd/argoproj.io/Application/web-app-ns
 +++ target/argocd/argoproj.io/Application/web-app-ns
 @@ -5,7 +5,7 @@

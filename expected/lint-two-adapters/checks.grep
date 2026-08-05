@@ -7,13 +7,13 @@ expect:affected=1 changed=1 resources=+1,-0,~1
 # command's stdout clobber the other's, exactly one of these two lines survives
 # and the case fails. lint-conftest proves the second adapter works at all; this
 # proves the two are merged rather than exclusive.
-must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/cluster-info-web
-must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+must:\[target\] \[lint#1/disallow-latest-tag\] Deployment/cluster-info-web
+must:\[target\] \[lint#2/no_plaintext_credentials\] ConfigMap/cluster-info-cm
 # Neither tool may report on base: the Deployment does not exist there and the
 # ConfigMap note is still clean. A both-sides finding would mean the label
 # semantics broke, not that the policies fired.
-must-not:\[base\] \[kyverno/
-must-not:\[base\] \[conftest/
+must-not:\[base\] \[lint#1/
+must-not:\[base\] \[lint#2/
 # The two edits that trigger them must actually reach the render - findings
 # without them would mean the linters saw something other than this diff.
 must:^\+.*image: nginx:latest

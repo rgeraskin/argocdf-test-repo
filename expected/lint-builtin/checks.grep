@@ -4,15 +4,18 @@
 expect:affected=1 changed=1 resources=+1,-0,~1
 # The BUILT-IN adapters (--lint-kyverno / --lint-conftest) must reach the report
 # through the same path a shell command does. This case carries the identical
-# fixture to lint-two-adapters, so the two expectation dirs differ only in the
-# title line - which is what pins the built-ins as equivalent to the shell
-# adapters they replace, rather than merely working.
-must:\[target\] \[kyverno/disallow-latest-tag\] Deployment/cluster-info-web
-must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+# fixture to lint-two-adapters, so the two expectation dirs differ only in the title
+# line and in each linter's IDENTITY - lint-kyverno#1/lint-conftest#1 here against
+# lint#1/lint#2 there, because those really are different flags. Everything else -
+# the findings, their side labels, their order, the diff - is byte-for-byte the same,
+# which is what pins the built-ins as equivalent to the shell adapters they replace
+# rather than merely working.
+must:\[target\] \[lint-kyverno#1/disallow-latest-tag\] Deployment/cluster-info-web
+must:\[target\] \[lint-conftest#1/no_plaintext_credentials\] ConfigMap/cluster-info-cm
 # Both adapters must be merged, and the fixed order (kyverno then conftest) is
 # report-visible, so a reordering shows up here.
-must-not:\[base\] \[kyverno/
-must-not:\[base\] \[conftest/
+must-not:\[base\] \[lint-kyverno#1/
+must-not:\[base\] \[lint-conftest#1/
 # The edits that trigger them must actually reach the render.
 must:^\+.*image: nginx:latest
 must:^\+.*note:.*password=placeholder

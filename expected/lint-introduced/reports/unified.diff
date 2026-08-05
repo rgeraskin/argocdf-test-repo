@@ -1,7 +1,7 @@
 # ArgoCD Diff: master → case/lint-introduced
 # Application: grandchild (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/grandchild-app-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/grandchild-app-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/grandchild-app-web
 +++ target/apps/Deployment/grandchild-app-web
 @@ -13,6 +13,6 @@
@@ -15,7 +15,7 @@
 
 # Application: web-app (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-web
 +++ target/apps/Deployment/web-app-web
 @@ -13,6 +13,6 @@
@@ -29,7 +29,7 @@
 
 # Application: web-app-files (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-files-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-files-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-files-web
 +++ target/apps/Deployment/web-app-files-web
 @@ -13,6 +13,6 @@
@@ -43,7 +43,7 @@
 
 # Application: web-app-inline (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-inline-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-inline-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-inline-web
 +++ target/apps/Deployment/web-app-inline-web
 @@ -13,6 +13,6 @@
@@ -57,7 +57,7 @@
 
 # Application: web-app-named (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/base-release-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/base-release-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/base-release-web
 +++ target/apps/Deployment/base-release-web
 @@ -13,6 +13,6 @@
@@ -71,7 +71,7 @@
 
 # Application: web-app-ns (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-ns-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-ns-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-ns-web
 +++ target/apps/Deployment/web-app-ns-web
 @@ -13,6 +13,6 @@
@@ -85,7 +85,7 @@
 
 # Application: web-app-object (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-object-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-object-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-object-web
 +++ target/apps/Deployment/web-app-object-web
 @@ -13,6 +13,6 @@
@@ -99,7 +99,7 @@
 
 # Application: web-app-params (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/disallow-latest-tag] Deployment/web-app-params-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint#1/disallow-latest-tag] Deployment/web-app-params-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
 --- base/apps/Deployment/web-app-params-web
 +++ target/apps/Deployment/web-app-params-web
 @@ -13,6 +13,6 @@

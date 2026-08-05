@@ -8,20 +8,25 @@ expect:affected=1 changed=1 resources=+0,-0,~1
 # CASE_ARGS) and kept its stdout line. conftest is OFFLINE, so unlike
 # lint-cr-policy this proves nothing about cluster propagation - only that the
 # lint contract is tool-agnostic.
-must:\[target\] \[conftest/no_plaintext_credentials\] ConfigMap/cluster-info-cm
+must:\[target\] \[lint#2/no_plaintext_credentials\] ConfigMap/cluster-info-cm
 # Base still carries the clean note, so the finding is target-only. This also
 # fails if the adapter reports the same document twice (once per side).
-must-not:\[base\] \[conftest/
+must-not:\[base\] \[lint#2/
 # The values edit itself must reach the rendered ConfigMap - a finding without
 # it would mean conftest linted something other than this render.
 must:^\+.*note:.*password=placeholder
 # The row's headline is that kyverno ALSO ran and contributed nothing - empty output
 # at exit 0 is "no findings", not a failure. Nothing guarded it: the historical
 # empty-stdout-as-failure bug would have added kyverno lint-failure warnings and every
-# check above would still pass. So no kyverno line, and no shell-adapter failure line,
-# may appear anywhere in this report.
-must-not:\[kyverno
-must-not:\] lint#
+# check above would still pass. So no FINDING from lint#1 (this case's kyverno
+# adapter, whose bracket would continue into a policy name)...
+must-not:\[lint#1/
+# ...and no failure line from EITHER adapter. Those are the lines whose bracket ENDS
+# at the linter, followed by the failure itself - which is what distinguishes them
+# from the conftest finding this case requires above, whose bracket continues into a
+# policy name. A must-not on the bare prefix would forbid that finding too, and the
+# case could never pass.
+must-not:\[lint#[0-9]+\] (exit status|timeout after|signal:)
 # ...and the absence must be an absence of FINDINGS, not of the invocation: a
 # report cannot distinguish "kyverno ran and matched nothing" from "kyverno was
 # never invoked" (both are empty by the exit-code contract), so the fresh run's
@@ -30,5 +35,8 @@ must-not:\] lint#
 # part of the pattern on purpose: lines=0 ALONE is also what a skipped linter logs,
 # so without it this check would pass for an adapter that never ran - the exact
 # thing it exists to rule out. lint#1 is the first --lint of this case's CASE_ARGS
-# (the kyverno adapter); lint#2 is the conftest one.
-must-log:Linted.*linter=lint#1 command=scripts/lint-kyverno\.sh status=ok lines=0
+# (the kyverno adapter); lint#2 is the conftest one. BOTH sides are asserted, and the
+# app is named: a single pattern without them passed on the target-side record alone,
+# so a regression that skipped base-side linting entirely still satisfied it.
+must-log:Linted app=cluster-info .*side=base linter=lint#1 command=scripts/lint-kyverno\.sh status=ok lines=0
+must-log:Linted app=cluster-info .*side=target linter=lint#1 command=scripts/lint-kyverno\.sh status=ok lines=0

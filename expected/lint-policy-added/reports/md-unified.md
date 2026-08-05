@@ -5,8 +5,8 @@
 <summary>Show diff for <b>cluster-info (argocd)</b> — ⚠️2 🟢+1</summary>
 
 > ⚠️ **2 warning(s):**
-> - [base] lint-kyverno#1 policies/kyverno-added: no policies on this side — not linted
-> - [target] [kyverno/require-pinned-images] Deployment/cluster-info-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [base] [lint-kyverno#1] not linted: no policies in &#34;policies/kyverno-added&#34;
+> - [target] [lint-kyverno#1/require-pinned-images] Deployment/cluster-info-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### ➕ apps/Deployment/cluster-info-web
 

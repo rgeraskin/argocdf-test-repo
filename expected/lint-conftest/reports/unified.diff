@@ -1,7 +1,7 @@
 # ArgoCD Diff: master → case/lint-conftest
 # Application: cluster-info (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [conftest/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key "note" must not carry a plaintext credential
+#   • [target] [lint#2/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key "note" must not carry a plaintext credential
 --- base/ConfigMap/cluster-info-cm
 +++ target/ConfigMap/cluster-info-cm
 @@ -1,7 +1,7 @@

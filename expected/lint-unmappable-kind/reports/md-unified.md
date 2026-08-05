@@ -5,7 +5,7 @@
 <summary>Show diff for <b>cluster-info (argocd)</b> — ⚠️1 🟢+2</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [kyverno/disallow-latest-tag] Deployment/cluster-info-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [target] [lint-kyverno#1/disallow-latest-tag] Deployment/cluster-info-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### ➕ apps/Deployment/cluster-info-web
 

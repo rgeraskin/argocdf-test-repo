@@ -59,6 +59,14 @@
 # exactly the empty-output rule above.
 set -u
 
+# argocdf assigns every linter an identity - the flag that configured it plus its
+# position among the flags of that kind - and prefixes each warning line with it:
+# [lint#1/policy-name] for a finding, [lint#1] for a line about the linter itself.
+# A command cannot infer its own position, so argocdf exports it. REQUIRED here
+# rather than defaulted, for the reason ARGOCDF_CONTEXT is: a fallback would let
+# the export regress silently while every case still passed.
+: "${ARGOCDF_LINT_ID:?argocdf must export the linter identity}"
+
 repo_root="$(git rev-parse --show-toplevel)"
 
 # Each tool owns a directory under policies/, so this adapter hands kyverno its
@@ -79,7 +87,7 @@ shopt -u nullglob
 [ ${#entries[@]} -eq 0 ] && exit 0
 
 if [ -z "${ARGOCDF_CONTEXT:-}" ]; then
-  echo "ARGOCDF_CONTEXT not set: refusing to lint against an unknown cluster"
+  echo "[$ARGOCDF_LINT_ID] ARGOCDF_CONTEXT not set: refusing to lint against an unknown cluster"
   exit 1
 fi
 
@@ -103,7 +111,7 @@ rc=$?
 
 if [ -z "$report" ]; then
   [ "$rc" -eq 0 ] && exit 0
-  echo "kyverno apply failed (exit $rc) with no report output"
+  echo "[$ARGOCDF_LINT_ID] kyverno apply failed (exit $rc) with no report output"
   exit "$rc"
 fi
 
@@ -119,14 +127,14 @@ fi
 #
 # Kept byte-identical to argocdf's built-in --lint-kyverno adapter, which the e2e
 # suite pins by running one fixture through both paths.
-printf '%s\n' "$report" | jq -r '
+printf '%s\n' "$report" | jq -r --arg id "$ARGOCDF_LINT_ID" '
   .results[]?
   | select(.result == "fail" or .result == "warn" or .result == "error")
   | . as $r
   | (if $r.result == "error" then "ERROR " else "" end) as $marker
   | ($r.message | gsub("\n"; " ")) as $msg
   | if ($r.resources | length) > 0
-    then $r.resources[] | "[kyverno/\($r.policy)] \($marker)\(.kind)/\(.name): \($msg)"
-    else "[kyverno/\($r.policy)] \($marker)\($msg)"
+    then $r.resources[] | "[\($id)/\($r.policy)] \($marker)\(.kind)/\(.name): \($msg)"
+    else "[\($id)/\($r.policy)] \($marker)\($msg)"
     end
 '

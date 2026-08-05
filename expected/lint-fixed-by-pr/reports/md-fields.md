@@ -5,7 +5,7 @@
 <summary><b>kustomize-app (argocd)</b> ⚠️ 1 warning(s) 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [base] [kyverno/disallow-latest-tag] Deployment/kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [base] [lint#1/disallow-latest-tag] Deployment/kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/kust-web
 
@@ -20,7 +20,7 @@
 <summary><b>kustomize-app-overrides (argocd)</b> ⚠️ 1 warning(s) 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [base] [kyverno/disallow-latest-tag] Deployment/base-kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
+> - [base] [lint#1/disallow-latest-tag] Deployment/base-kust-web: container images must be pinned to a tag (&#39;:latest&#39; or tag-less images are not allowed)
 
 #### 📝 apps/Deployment/base-kust-web
 

@@ -1,5 +1,8 @@
 # Identical fixture, one flag apart: the built-in adapters must produce the SAME
-# report as the shell adapters, differing only where the case name appears.
-# review-expected.sh enforces it byte-for-byte after normalizing the names, so
-# the equivalence is a checked claim rather than a review-time observation.
+# report as the shell adapters, differing only where the case name appears AND in
+# each linter's identity - lint-kyverno#1/lint-conftest#1 here against lint#1/lint#2
+# there, because those really are different flags. review-expected.sh enforces the
+# rest byte-for-byte after normalizing both, so the equivalence is a checked claim
+# rather than a review-time observation; the per-case checks.grep re-pin the exact
+# identities, so nothing is lost by normalizing them here.
 lint-two-adapters

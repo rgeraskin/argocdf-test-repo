@@ -8,20 +8,29 @@ expect:affected=1 changed=1 resources=+1,-0,~0
 # Both halves must be in the report together: the finding, and the note that
 # explains why it is one-sided.
 #
-# Without the note, the report asserts something FALSE. Its label contract reads a
-# [target]-only finding as "introduced by this change" - but this change
-# introduced the POLICY, not the violation, and an unlinted base side is exactly
-# how a pre-existing violation comes to look new. The note is the only thing in
-# the report that says the two sides are not comparable for this linter.
-must:\[base\] lint-kyverno#1 policies/kyverno-added: no policies on this side — not linted
-must:\[target\] \[kyverno/require-pinned-images\] Deployment/cluster-info-web
+# Without the note, a reader cannot tell an unlinted side from a clean one, and the
+# label contract reads a [target]-only finding as "introduced by this change" - which
+# is exactly how a PRE-EXISTING violation comes to look new once a first policy
+# starts detecting it. The note is the only thing in the report that says the two
+# sides are not comparable for this linter.
+#
+# SCOPE, so this case is not read as more than it is: its branch adds the violating
+# Deployment as well as the policy, so THIS finding really was introduced by the
+# change. That is not a weaker fixture but the only one available - a change touching
+# only policies/ selects no application at all (nothing under any source path
+# changed), so argocdf exits before rendering and no linter runs. The Deployment does
+# double duty: it is the violation AND what makes cluster-info affected. What the
+# case pins is therefore the MECHANISM - one side skipped, the note emitted, the
+# labels one-sided - not the pre-existing-violation story that mechanism protects.
+must:\[base\] \[lint-kyverno#1\] not linted: no policies in "policies/kyverno-added"
+must:\[target\] \[lint-kyverno#1/require-pinned-images\] Deployment/cluster-info-web
 # The note must be one-sided too, or it proves nothing: on target the policies ARE
 # there and kyverno really ran, which is what makes the base-side note meaningful
 # rather than a line argocdf prints for every side.
-must-not:\[target\] lint-kyverno#1 policies/kyverno-added: no policies
+must-not:\[target\] \[lint-kyverno#1\] not linted
 # A side that was never linted cannot have findings. A [base] finding here would
 # mean the skip did not happen and the case is testing nothing.
-must-not:\[base\] \[kyverno/
+must-not:\[base\] \[lint-kyverno#1/
 # The violation must actually reach the render - a finding without it would mean
 # kyverno linted something other than this diff.
 must:^\+.*image: nginx:latest

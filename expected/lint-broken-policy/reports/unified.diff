@@ -1,7 +1,7 @@
 # ArgoCD Diff: master → case/lint-broken-policy
 # Application: cluster-info (argocd)
 # ⚠ 1 warning(s):
-#   • [target] [kyverno/broken-expression] ERROR Deployment/cluster-info-web: expression 'object.spec.nonexistentField == 'whatever'' resulted in error: no such key: nonexistentField
+#   • [target] [lint-kyverno#1/broken-expression] ERROR Deployment/cluster-info-web: expression 'object.spec.nonexistentField == 'whatever'' resulted in error: no such key: nonexistentField
 --- base/apps/Deployment/cluster-info-web
 +++ target/apps/Deployment/cluster-info-web
 @@ -1 +1,18 @@

@@ -32,6 +32,14 @@
 # and each result's "namespace" (the package name) is what labels the finding.
 set -u
 
+# argocdf assigns every linter an identity - the flag that configured it plus its
+# position among the flags of that kind - and prefixes each warning line with it:
+# [lint#1/policy-name] for a finding, [lint#1] for a line about the linter itself.
+# A command cannot infer its own position, so argocdf exports it. REQUIRED here
+# rather than defaulted, for the reason ARGOCDF_CONTEXT is: a fallback would let
+# the export regress silently while every case still passed.
+: "${ARGOCDF_LINT_ID:?argocdf must export the linter identity}"
+
 repo_root="$(git rev-parse --show-toplevel)"
 
 # Each tool owns a directory under policies/, so this adapter hands conftest its
@@ -57,13 +65,13 @@ rc=$?
 
 if [ -z "$report" ]; then
   [ "$rc" -eq 0 ] && exit 0
-  echo "conftest test failed (exit $rc) with no report output"
+  echo "[$ARGOCDF_LINT_ID] conftest test failed (exit $rc) with no report output"
   exit "$rc"
 fi
 
-printf '%s\n' "$report" | jq -r '
+printf '%s\n' "$report" | jq -r --arg id "$ARGOCDF_LINT_ID" '
   .[]?
   | .namespace as $ns
   | (.failures[]?, .warnings[]?)
-  | "[conftest/\($ns)] \(.msg | gsub("\n"; " "))"
+  | "[\($id)/\($ns)] \(.msg | gsub("\n"; " "))"
 '

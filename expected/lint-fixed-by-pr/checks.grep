@@ -3,7 +3,7 @@
 # quietly pinned by the next --regenerate.
 expect:affected=2 changed=2 resources=+0,-0,~2
 # master's deliberate violation fixed by the change -> [base]-only findings
-must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/kust-web
-must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web
+must:\[base\] \[lint#1/disallow-latest-tag\] Deployment/kust-web
+must:\[base\] \[lint#1/disallow-latest-tag\] Deployment/base-kust-web
 must:^\+.*image: nginx:1\.27\.0
-must-not:\[target\] \[kyverno
+must-not:\[target\] \[lint#1

@@ -5,7 +5,7 @@
 <summary>Show diff for <b>cluster-info (argocd)</b> — ⚠️1 🟡~1</summary>
 
 > ⚠️ **1 warning(s):**
-> - [target] [conftest/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key &#34;note&#34; must not carry a plaintext credential
+> - [target] [lint#2/no_plaintext_credentials] ConfigMap/cluster-info-cm: data key &#34;note&#34; must not carry a plaintext credential
 
 #### 📝 ConfigMap/cluster-info-cm
 

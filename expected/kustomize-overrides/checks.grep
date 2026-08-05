@@ -8,8 +8,8 @@ must:^\+.*namespace: production
 must:team: platform
 must:nginx:1\.27\.1
 # the images transform pins :latest on target -> [base]-only finding
-must:\[base\] \[kyverno/disallow-latest-tag\] Deployment/base-kust-web
-must-not:\[target\] \[kyverno
+must:\[base\] \[lint#1/disallow-latest-tag\] Deployment/base-kust-web
+must-not:\[target\] \[lint#1
 # Indentation-anchored, because the un-anchored patterns above also match the
 # root-app hunk that shows the Application CR's own kustomize block - so a renderer
 # that stopped applying these transformers to the CHILD's resources would still have
