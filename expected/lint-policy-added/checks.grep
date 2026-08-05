@@ -1,0 +1,27 @@
+# Exhaustiveness: the summary block must be EXACTLY this. The branch adds one
+# template to a single-app chart, so one app, one added resource, nothing
+# modified - any extra app section or resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+1,-0,~0
+# THE PAIRING THIS CASE EXISTS FOR. The policy directory exists only on the
+# branch, so the base side has none and is not linted, while the target side is.
+# Both halves must be in the report together: the finding, and the note that
+# explains why it is one-sided.
+#
+# Without the note, the report asserts something FALSE. Its label contract reads a
+# [target]-only finding as "introduced by this change" - but this change
+# introduced the POLICY, not the violation, and an unlinted base side is exactly
+# how a pre-existing violation comes to look new. The note is the only thing in
+# the report that says the two sides are not comparable for this linter.
+must:\[base\] lint-kyverno#1 policies/kyverno-added: no policies on this side — not linted
+must:\[target\] \[kyverno/require-pinned-images\] Deployment/cluster-info-web
+# The note must be one-sided too, or it proves nothing: on target the policies ARE
+# there and kyverno really ran, which is what makes the base-side note meaningful
+# rather than a line argocdf prints for every side.
+must-not:\[target\] lint-kyverno#1 policies/kyverno-added: no policies
+# A side that was never linted cannot have findings. A [base] finding here would
+# mean the skip did not happen and the case is testing nothing.
+must-not:\[base\] \[kyverno/
+# The violation must actually reach the render - a finding without it would mean
+# kyverno linted something other than this diff.
+must:^\+.*image: nginx:latest
