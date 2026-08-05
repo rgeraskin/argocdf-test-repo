@@ -21,10 +21,14 @@ must:^\+.*note:.*password=placeholder
 # check above would still pass. So no kyverno line, and no shell-adapter failure line,
 # may appear anywhere in this report.
 must-not:\[kyverno
-must-not:\] lint "
+must-not:\] lint#
 # ...and the absence must be an absence of FINDINGS, not of the invocation: a
 # report cannot distinguish "kyverno ran and matched nothing" from "kyverno was
 # never invoked" (both are empty by the exit-code contract), so the fresh run's
 # LOG must show the kyverno adapter invoked and contributing zero lines. Checked
-# by run.sh at run time; argocdf logs one INFO line per linter invocation.
-must-log:Lint invocation finished.*lint-kyverno\.sh.*lines=0
+# by run.sh at run time; argocdf logs one line per linter invocation. status=ok is
+# part of the pattern on purpose: lines=0 ALONE is also what a skipped linter logs,
+# so without it this check would pass for an adapter that never ran - the exact
+# thing it exists to rule out. lint#1 is the first --lint of this case's CASE_ARGS
+# (the kyverno adapter); lint#2 is the conftest one.
+must-log:Linted.*linter=lint#1 command=scripts/lint-kyverno\.sh status=ok lines=0
