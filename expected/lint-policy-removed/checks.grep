@@ -1,0 +1,26 @@
+# Exhaustiveness: two apps share apps/kustomize-app on purpose (see the catalog), so
+# both are selected by the comment-only edit - and NOTHING changes in either render,
+# which is the point: this case shows the label asymmetry with no diff to explain it.
+# No resources= line, because no resource moved.
+expect:affected=2 changed=0
+# THE MIRROR OF case/lint-policy-added. There the base side had no policies; here the
+# branch DELETES them, so the TARGET side is the unlinted one. The pair must appear
+# with the sides swapped:
+#
+# a finding on BASE, where the policies still exist...
+must:\[base\] \[lint-kyverno#1/images-must-be-pinned\] Deployment/kust-web
+# ...and the note on TARGET, where they no longer do.
+must:\[target\] \[lint-kyverno#1\] not linted: no policies in "policies/kyverno-removed"
+# This is what the direction buys. The violation PRE-EXISTS on both sides - kustomize-app
+# carries nginx:latest on master - and nothing about it changed, so a reader who trusts
+# the label vocabulary alone would read a [base]-only finding as "fixed by this change".
+# It was not fixed; it stopped being checked. The note is the only thing that says so,
+# and lint-policy-added cannot demonstrate this half: its violation is introduced by
+# its own branch.
+must-not:^\+.*image:
+must-not:^-.*image:
+# The note must be one-sided, or it marks no asymmetry: base really was linted, which
+# the finding above proves, so the note must not appear there too.
+must-not:\[base\] \[lint-kyverno#1\] not linted
+# And the target side cannot have findings: it was never linted.
+must-not:\[target\] \[lint-kyverno#1/
