@@ -1,5 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
+# touched by case/lint-policy-removed so the app is SELECTED: a change that only
+# deletes policies/ matches no source path and would render nothing at all.
 metadata:
   name: kust-web
 spec:
