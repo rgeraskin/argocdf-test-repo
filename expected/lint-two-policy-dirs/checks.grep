@@ -1,0 +1,22 @@
+# Exhaustiveness: the summary block must be EXACTLY this. One template added to a
+# single-app chart, so one app and one added resource - any extra app section or
+# resource fails here rather than being quietly pinned by the next --regenerate.
+expect:affected=1 changed=1 resources=+1,-0,~0
+# TWO directories of the SAME tool, which no other case has: --lint-kyverno is
+# passed twice, so both invocations are kyverno and only their ORDINAL tells them
+# apart. Each directory holds a policy the other does not, and both fire on the one
+# added Deployment, so the report must carry one finding from each.
+must:\[target\] \[lint-kyverno#1/disallow-latest-tag\] Deployment/cluster-info-web
+must:\[target\] \[lint-kyverno#2/broken-expression\] ERROR Deployment/cluster-info-web
+# THE PAIR THAT MAKES IT PROVE SOMETHING. Two distinct ordinals appearing is not
+# enough: they have to follow FLAG ORDER, so policies/kyverno is #1 and
+# policies/kyverno-broken is #2. Swap the assignment and the two must: lines above
+# would still both match SOME line, while every finding named the wrong directory.
+must-not:\[lint-kyverno#1/broken-expression
+must-not:\[lint-kyverno#2/disallow-latest-tag
+# Neither may report on base: the Deployment does not exist there. A both-sides
+# finding would mean the side labels broke, not that the policies fired.
+must-not:\[base\] \[lint-kyverno#
+# The violation must actually reach the render - findings without it would mean
+# kyverno linted something other than this diff.
+must:^\+.*image: nginx:latest

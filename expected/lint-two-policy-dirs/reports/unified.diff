@@ -1,0 +1,31 @@
+# ArgoCD Diff: master → case/lint-two-policy-dirs
+# Application: cluster-info (argocd)
+# ⚠ 2 warning(s):
+#   • [target] [lint-kyverno#1/disallow-latest-tag] Deployment/cluster-info-web: container images must be pinned to a tag (':latest' or tag-less images are not allowed)
+#   • [target] [lint-kyverno#2/broken-expression] ERROR Deployment/cluster-info-web: expression 'object.spec.nonexistentField == 'whatever'' resulted in error: no such key: nonexistentField
+--- base/apps/Deployment/cluster-info-web
++++ target/apps/Deployment/cluster-info-web
+@@ -1 +1,18 @@
++apiVersion: apps/v1
++kind: Deployment
++metadata:
++    name: cluster-info-web
++spec:
++    replicas: 1
++    selector:
++        matchLabels:
++            app: cluster-info
++    template:
++        metadata:
++            labels:
++                app: cluster-info
++        spec:
++            containers:
++                - image: nginx:latest
++                  name: web
+ 
+
+# Summary
+# Applications affected: 1
+# Applications changed: 1
+# Resources: +1 added, -0 removed, ~0 modified
