@@ -14,3 +14,21 @@ must:podinfo:6\.7\.1
 # The OCI dependency beside it must NOT move: the two cases cross-guard, so a
 # bump that leaked to both dependencies fails here and in oci-dependency-bump.
 must-not:ocidep-6\.7\.1
+# ---- log assertions (this case runs with --verbose; see its CASE_ARGS) ----------
+# The umbrella chart declares dependencies and does not commit charts/, so ArgoCD's
+# dependency PROBE fires here and only here: it runs `helm template`, lets it FAIL,
+# then builds dependencies and templates again. util/exec logs that expected failure
+# at ERROR before the caller decides it was harmless, so argocdf demotes it - and
+# these three lines are the only end-to-end check of that, in either direction.
+#
+# It must reach the log DEMOTED, under the subprocess sub-prefix...
+must-log:DEBU argocd/exec:.*missing in charts/ directory
+# ...it must NOT be at ERROR, which is the half must-log alone cannot express: a
+# demotion that stopped working would still satisfy the line above. This is also the
+# tripwire for an argo-cd bump that changes the probe's message or the argv shape -
+# the predicate would stop matching and the noise would return here.
+must-not-log:ERRO argocd.*missing in charts/ directory
+# ...and the --api-versions flood must be elided from that real argv (a live cluster
+# contributes hundreds of pairs, ~16k characters, of which the failure is the last
+# ~180). The count is kept, so this also proves argocdf passed the API set at all.
+must-log:--api-versions <[0-9]+ elided>
