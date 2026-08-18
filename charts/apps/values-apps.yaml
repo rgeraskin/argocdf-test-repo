@@ -113,9 +113,9 @@ applications:
 
   # --- remote OCI chart, scheme-less repoURL (the ArgoCD enableOCI form)
   - name: oci-podinfo
-    chart: podinfo
-    repoURL: ghcr.io/stefanprodan/charts
+    repoURL: oci://ghcr.io/stefanprodan/charts/podinfo
     targetRevision: 6.7.0
+    path: .
     helm:
       skipTests: true
 
