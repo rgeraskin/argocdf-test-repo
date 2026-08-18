@@ -126,7 +126,7 @@ applications:
   # scheme BEFORE it looks at chart:.
   - name: oci-artifact-podinfo
     repoURL: oci://ghcr.io/stefanprodan/charts/podinfo
-    targetRevision: 6.7.0
+    targetRevision: 6.7.1
     # ArgoCD's spec validation requires path or chart on EVERY source, with no
     # carve-out for oci:// (util/argo.validateSourcePermissions), so an artifact
     # source without a path is an invalid Application - the controller reports
