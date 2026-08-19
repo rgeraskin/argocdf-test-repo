@@ -134,7 +134,7 @@ The flag set every case runs with — `--repo-creds cluster`, `--kustomize-enabl
 A failing case leaves its actual output and a truncated diff against the expectation under `out/<case>/`.
 
 Network notes:
-1. `oci-podinfo`/`oci-chart-bump`/`combined-spec-and-values` (ghcr.io), `oci-dependency-bump`/`classic-dependency-bump` (ghcr.io + the podinfo helm repo, via `helm dependency build`), `kustomize-helm` (podinfo helm repo) and `external-repo-source` (podinfo git repo) fetch public artifacts; everything else runs offline.
+1. `oci-podinfo`/`oci-chart-bump`/`oci-artifact-podinfo`/`oci-artifact-bump`/`oci-artifact-spelling`/`combined-spec-and-values` (ghcr.io), `oci-dependency-bump`/`classic-dependency-bump` (ghcr.io + the podinfo helm repo, via `helm dependency build`), `kustomize-helm` (podinfo helm repo) and `external-repo-source` (podinfo git repo) fetch public artifacts; everything else runs offline.
 2. The bootstrap script fetches the pinned ArgoCD Application CRD (or the full install with `--full`) from the argo-cd GitHub repo.
 3. `private-chart-bump` and `private-chart-unauth` need public DNS only to resolve `127.0.0.1.nip.io` (the chart bytes come from the in-cluster registry); if your router's DNS-rebind protection blocks loopback answers — or a filtering resolver/proxy intercepts the name for a window, whose signature is the unauth case's anonymous pull failing `Forbidden` instead of the pinned TLS error — add `127.0.0.1 127.0.0.1.nip.io` to /etc/hosts.
 

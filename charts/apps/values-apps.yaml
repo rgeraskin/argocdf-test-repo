@@ -119,6 +119,22 @@ applications:
     helm:
       skipTests: true
 
+  # --- remote OCI ARTIFACT source (ArgoCD 3.1+). The oci:// scheme selects the
+  # artifact source TYPE, not a decorated chart repo: the chart name moves into
+  # repoURL and there is no chart: field. Same podinfo bytes as oci-podinfo above,
+  # spelled the other way — which is the whole hazard, since ArgoCD tests the
+  # scheme BEFORE it looks at chart:.
+  - name: oci-artifact-podinfo
+    repoURL: oci://ghcr.io/stefanprodan/charts/podinfo
+    targetRevision: 6.7.0
+    # ArgoCD's spec validation requires path or chart on EVERY source, with no
+    # carve-out for oci:// (util/argo.validateSourcePermissions), so an artifact
+    # source without a path is an invalid Application - the controller reports
+    # InvalidSpecError and never renders it. "." is the artifact root.
+    path: .
+    helm:
+      skipTests: true
+
   # --- multi-source: chart + $values ref resolved against the repo root
   - name: greeter
     sources:

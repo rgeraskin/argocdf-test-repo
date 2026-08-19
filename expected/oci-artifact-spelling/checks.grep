@@ -1,0 +1,14 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=1 resources=+0,-0,~1
+# the spec change itself: the chart name moves out of chart: and into repoURL,
+# which in ArgoCD retypes the source from helm-OCI chart to OCI artifact
+must:^\+        repoURL: oci://ghcr\.io/stefanprodan/charts/podinfo
+must:^-        chart: podinfo$
+# and the two spellings of the same podinfo render IDENTICALLY: the child app's
+# own section says so, and no rendered chart content reaches the report. Either
+# one appearing would mean the artifact path produced different manifests than
+# the chart path did - the equivalence this case exists to prove.
+must:^# No changes$
+must-not:helm\.sh/chart: podinfo-
