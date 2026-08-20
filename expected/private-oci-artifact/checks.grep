@@ -1,0 +1,18 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+2,-0,~0
+# The new CR, spelled the ARTIFACT way: the chart name rides in repoURL and no
+# chart: field exists. If either changed, this case would silently become a
+# duplicate of private-chart-bump.
+must:^\+        repoURL: oci://127\.0\.0\.1\.nip\.io:5317/charts/private-app$
+must-not:^[ +-] +chart: private-app$
+# And the artifact was really PULLED, with credentials: its ConfigMap can only
+# appear if the authenticated fetch succeeded, and its content proves the bytes
+# came from the registry rather than from anywhere local.
+must:^\+    message: hello-from-behind-auth$
+must:^\+    chartVersion: 0\.1\.0$
+# An anonymous pull fails against this registry (case/private-chart-unauth pins
+# that direction), so a render error here would mean the type: oci Secret stopped
+# answering for the artifact URL.
+must-not:^# Error:
