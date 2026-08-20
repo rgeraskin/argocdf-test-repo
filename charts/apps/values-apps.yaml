@@ -166,6 +166,14 @@ applications:
     repoURL: 127.0.0.1.nip.io:5317/charts
     targetRevision: 0.1.0
 
+  # --- the SAME private artifact as private-app above, spelled the OCI-ARTIFACT
+  #     way: the chart name rides in repoURL, there is no chart: field, and
+  #     credentials resolve from a `type: oci` repository Secret
+  - name: private-artifact
+    repoURL: oci://127.0.0.1.nip.io:5317/charts/private-app
+    targetRevision: 0.1.0
+    path: .
+
   # --- shared chart consumed BY PATH from charts/ (not vendored per app):
   #     one chart edit fans out to every consuming app
   - name: service-alpha
