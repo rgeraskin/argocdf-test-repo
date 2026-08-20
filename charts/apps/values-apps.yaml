@@ -166,6 +166,14 @@ applications:
     repoURL: 127.0.0.1.nip.io:5317/charts
     targetRevision: 0.1.0
 
+  # --- a PLAIN OCI artifact: not a helm chart, so ArgoCD's OCI client takes its
+  #     non-helm extraction path (no top-level directory stripped) and the
+  #     contents render as a DIRECTORY source. path: selects inside the artifact.
+  - name: plain-artifact
+    repoURL: oci://127.0.0.1.nip.io:5317/artifacts/plain-app
+    targetRevision: 1.0.0
+    path: manifests
+
   # --- shared chart consumed BY PATH from charts/ (not vendored per app):
   #     one chart edit fans out to every consuming app
   - name: service-alpha
