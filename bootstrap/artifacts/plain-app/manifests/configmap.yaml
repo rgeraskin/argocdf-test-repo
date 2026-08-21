@@ -1,0 +1,9 @@
+# Deliberately NOT templated: a plain artifact is rendered as a directory source,
+# so what is committed here is what the report must show.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: plain-artifact-config
+data:
+  origin: oci-artifact-not-a-chart
+  layer: application/vnd.oci.image.layer.v1.tar+gzip

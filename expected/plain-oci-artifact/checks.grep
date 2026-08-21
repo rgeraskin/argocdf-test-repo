@@ -1,0 +1,22 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+expect:affected=2 changed=2 resources=+3,-0,~0
+# The new CR: an artifact source with a path INSIDE the artifact and no chart:.
+must:^\+        repoURL: oci://127\.0\.0\.1\.nip\.io:5317/artifacts/plain-app$
+must:^\+        path: manifests$
+must-not:^[ +-] +chart: 
+# Both documents of the artifact's manifests/ directory render. Two of them is
+# the point: a directory source renders every YAML under the path, so a single
+# resource here would mean only the first document survived.
+must:^\+    name: plain-artifact-config$
+must:^\+    name: plain-artifact-svc$
+# And the artifact really is the NON-HELM shape. This value is committed inside
+# the artifact, so it can only appear if the tar+gzip layer was accepted by the
+# media types argocdf supplies (render.DefaultOCILayerMediaTypes) — the entries
+# no other case exercises, since every other OCI fixture is a helm chart.
+must:^\+    layer: application/vnd\.oci\.image\.layer\.v1\.tar\+gzip$
+# The successful render is itself the proof of the non-helm extraction path: a
+# helm-config artifact has its single root directory STRIPPED, so "manifests"
+# would not exist and this case would be a render error instead.
+must-not:^# Error:
