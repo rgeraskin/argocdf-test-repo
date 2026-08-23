@@ -1,0 +1,28 @@
+# Exhaustiveness: the summary block must be EXACTLY this. Any extra
+# application section or changed resource fails here rather than being
+# quietly pinned by the next --regenerate.
+# No resources= : the target side never rendered, so nothing moved.
+expect:affected=1 changed=0 errors=1
+# The target's kustomization cannot build, and the failure is report content -
+# the app errors, the run does not.
+must:# Error: failed to render target branch
+# The diagnosis is the point: it is what the two rewrites below exist to make
+# visible, and it sat behind ~17,000 characters of flags in the report that
+# motivated them.
+must:cycle detected
+# 1. The cluster's API-version set must reach the report as a COUNT. ArgoCD
+#    passes one --helm-api-versions pair per advertised group/version AND kind
+#    and quotes the whole argv into the failure; util/kustomize, unlike
+#    util/helm, does not strip it from the error it RETURNS.
+must:--helm-api-versions <N elided>
+#    The negative is the one that actually catches a regression: two adjacent
+#    pairs mean the list came back. It cannot be satisfied by the elided form,
+#    which contains exactly one pair.
+must-not:--helm-api-versions [^ ]+ --helm-api-versions
+# 2. The render root must be redacted, as ArgoCD redacts it in the command list
+#    it returns. `kustomize build` is quoted with an ABSOLUTE app path and
+#    kustomize names absolute paths in its own diagnoses, so an unredacted error
+#    puts an ephemeral worktree directory in a PR comment three times. Pinned
+#    POSITIVELY: the placeholder the normalizer would leave behind is banned by
+#    the review gate itself, so only the redacted spelling can be asserted here.
+must:kustomize build \./apps/kustomize-helm

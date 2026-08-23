@@ -1,0 +1,8 @@
+# ArgoCD Diff: master → case/kustomize-build-fail
+# Application: kustomize-helm (argocd)
+# Error: failed to render target branch: failed to render source 0: `kustomize build ./apps/kustomize-helm --enable-helm --helm-kube-version 1.34.8 --helm-api-versions <N elided>` failed exit status 1: Error: accumulating components: loader.New "cycle detected: candidate root './apps/kustomize-helm' contains visited root './apps/kustomize-helm'"
+
+# Summary
+# Applications affected: 1
+# Applications changed: 0
+# Errors: 1
