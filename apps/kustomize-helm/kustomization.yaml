@@ -1,3 +1,5 @@
+components:
+  - .
 helmCharts:
   - name: podinfo
     repo: https://stefanprodan.github.io/podinfo
