@@ -25,7 +25,7 @@
 <details>
 <summary>Show diff for <b>schema-app (argocd)</b> — ❌</summary>
 
-> ⚠️ failed to render target branch: failed to render source 0: failed to execute helm template command: failed to get command args to log: `helm template . --name-template schema-app --namespace default --kube-version 1.34.8 &lt;api versions removed&gt; --include-crds` failed exit status 1: Error: values don&#39;t meet the specifications of the schema(s) in the following chart(s):
+> ⚠️ failed to render target branch: failed to render source 0: failed to execute helm template command: failed to get command args to log: `helm template . --name-template schema-app --namespace default --kube-version 1.34.8 <api versions removed> --include-crds` failed exit status 1: Error: values don&#39;t meet the specifications of the schema(s) in the following chart(s):
 > schema-app:
 > - at &#39;/replicas&#39;: got string, want integer
 
